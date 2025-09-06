@@ -65,7 +65,7 @@ const MissingDetails = () => {
                 </div>
             )}
 
-            {!loading && !error && !person && (
+            {!loading && error && !person && (
                 <div className="text-center py-12">
                     <Users className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
                     <h3 className="text-lg font-semibold text-foreground mb-2">

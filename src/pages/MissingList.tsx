@@ -76,7 +76,7 @@ const MissingListContainer = () => {
                         ))}
                     </div>
                 )}
-                {!loading && !error && (apiResponse?.content?.length || 0) === 0 && (
+                {!loading && error && (
                     <div className="flex flex-col text-center py-12">
                         <Users className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
                         <h3 className="text-lg font-semibold text-foreground mb-2">

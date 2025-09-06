@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
+
 type FetchFunction<T, K extends unknown[]> = (...args: K) => Promise<T>;
 
 interface FetchResult<T, K extends unknown[]> {
@@ -25,7 +26,8 @@ export function useFetchData<T, K extends unknown[]>(
                 const result = await fetchFn(...args);
                 setData(result);
             } catch (err) {
-                setError(err instanceof Error ? err.message : "Erro desconhecido");
+                const errorMessage = err instanceof Error ? err.message : "Erro desconhecido";
+                setError(errorMessage);
             } finally {
                 setLoading(false);
             }

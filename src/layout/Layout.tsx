@@ -10,7 +10,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <div className="min-h-screen bg-background">
-            <Toaster position="top-center" />
+            <Toaster position="top-center" richColors />
             <Header />
             <main className="px-4 py-8">
                 {children ? children : <Outlet />}
