@@ -1,21 +1,27 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Spinner } from './components/ui/shadcn-io/spinner';
+import { ThemeProvider } from './components/theme/theme-provider';
+import Layout from './layout/Layout';
 
-// Implementando Lazy Loading para as páginas
-const HomePage = lazy(() => import('./pages/PersonList'));
-const DetailPage = lazy(() => import('./pages/PersonDetails'));
+const HomePage = lazy(() => import('./pages/MissingList'));
 
 const App: React.FC = () => {
   return (
     <Router>
-      <Suspense fallback={<Spinner variant={'default'} />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/details/:uuid" element={<DetailPage />} />
-          {/* Você pode adicionar uma rota para página 404 */}
-        </Routes>
-      </Suspense>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Suspense fallback={
+          <div className="fixed inset-0 flex items-center justify-center">
+            <Spinner variant="default" size={32} />
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </ThemeProvider>
     </Router>
   );
 };

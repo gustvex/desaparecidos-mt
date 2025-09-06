@@ -1,21 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Users } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import type { Pessoa } from "@/assets/interfaces";
-import PersonListHeader from "@/components/PersonListHeader";
 import PersonCard from "@/components/Card";
+import { fetchPessoas, type ApiResponse, type SearchFilters } from "@/assets/api";
+import { Users } from "lucide-react";
+import ListPersonManager from "@/components/controller_list/ListPersonManager";
 
-
-interface SearchFilters {
-    nome?: string;
-    status?: "DESAPARECIDO" | "LOCALIZADO" | "";
-    localDesaparecimento?: string;
-    idadeMin?: number;
-    idadeMax?: number;
-}
 
 const PersonList = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -26,38 +17,28 @@ const PersonList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalRecords, setTotalRecords] = useState(0);
 
-    const fetchPeople = async (filters: SearchFilters = {}, page = 1) => {
+    const loadPeople = async (filters: SearchFilters = {}, page = 1) => {
         setLoading(true);
         setError(null);
 
         try {
-            const params = new URLSearchParams();
-            params.append('page', (page - 1).toString());
-            params.append('size', '10');
-
-            if (filters.nome) {
-                params.append('nome', filters.nome);
-            }
-
-            const response = await fetch(`https://abitus-api.geia.vip/v1/pessoas/aberto/filtro?${params.toString()}`);
-
-            if (!response.ok) {
-                throw new Error(`Erro ${response.status}: ${response.statusText}`);
-            }
-
-            const data = await response.json();
+            const data: ApiResponse = await fetchPessoas(filters, page);
 
             setPeople(data.content || []);
             setTotalPages(data.totalPages || 1);
             setCurrentPage(page);
             setTotalRecords(data.totalElements || 0);
 
+            // Atualizar parâmetros da URL
             const newSearchParams = new URLSearchParams();
             if (filters.nome) newSearchParams.set('nome', filters.nome);
+            if (filters.status) newSearchParams.set('status', filters.status);
+            if (filters.localDesaparecimento) newSearchParams.set('localDesaparecimento', filters.localDesaparecimento);
+            if (filters.idadeMin) newSearchParams.set('idadeMin', filters.idadeMin.toString());
+            if (filters.idadeMax) newSearchParams.set('idadeMax', filters.idadeMax.toString());
             if (page > 1) newSearchParams.set('page', page.toString());
 
             setSearchParams(newSearchParams);
-
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido ao carregar dados';
             setError(errorMessage);
@@ -67,23 +48,34 @@ const PersonList = () => {
         }
     };
 
-    // Load initial data and handle URL params
+    // Carregar dados iniciais e lidar com parâmetros da URL
     useEffect(() => {
         const filters: SearchFilters = {};
         const page = parseInt(searchParams.get('page') || '1');
+
         if (searchParams.get('nome')) filters.nome = searchParams.get('nome')!;
-        fetchPeople(filters, page);
+        if (searchParams.get('status')) filters.status = searchParams.get('status') as "DESAPARECIDO" | "LOCALIZADO";
+        if (searchParams.get('localDesaparecimento')) filters.localDesaparecimento = searchParams.get('localDesaparecimento')!;
+        if (searchParams.get('idadeMin')) filters.idadeMin = parseInt(searchParams.get('idadeMin')!);
+        if (searchParams.get('idadeMax')) filters.idadeMax = parseInt(searchParams.get('idadeMax')!);
+
+        loadPeople(filters, page);
     }, []);
 
     const handleSearch = (filters: SearchFilters) => {
-        const nomeFilter = { nome: filters.nome };
-        fetchPeople(nomeFilter, 1);
+        loadPeople(filters, 1);
     };
 
     const handlePageChange = (page: number) => {
         const filters: SearchFilters = {};
+
         if (searchParams.get('nome')) filters.nome = searchParams.get('nome')!;
-        fetchPeople(filters, page);
+        if (searchParams.get('status')) filters.status = searchParams.get('status') as "DESAPARECIDO" | "LOCALIZADO";
+        if (searchParams.get('localDesaparecimento')) filters.localDesaparecimento = searchParams.get('localDesaparecimento')!;
+        if (searchParams.get('idadeMin')) filters.idadeMin = parseInt(searchParams.get('idadeMin')!);
+        if (searchParams.get('idadeMax')) filters.idadeMax = parseInt(searchParams.get('idadeMax')!);
+
+        loadPeople(filters, page);
     };
 
     const LoadingSkeleton = () => (
@@ -107,23 +99,23 @@ const PersonList = () => {
     );
 
     return (
-        <div className="flex flex-col h-screen bg-background">
-            <header>
-                <PersonListHeader
-                    onSearch={handleSearch}
-                    loading={loading}
-                    error={error}
-                    totalRecords={totalRecords}
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                />
-            </header>
+        <div className="flex flex-col">
 
-            <main className="flex flex-wrap justify-center overflow-y-auto sm:p-6 lg:p-8">
+            <ListPersonManager
+                onSearch={handleSearch}
+                loading={loading}
+                error={error}
+                totalRecords={totalRecords}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
+
+            <main className="flex overflow-y-auto">
                 {loading && <LoadingSkeleton />}
 
                 {!loading && !error && people.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="flex flex-wrap justify-center">
                         {people.map((person) => (
                             <PersonCard key={person.id} person={person} />
                         ))}
@@ -141,47 +133,8 @@ const PersonList = () => {
                         </p>
                     </div>
                 )}
+
             </main>
-
-            {!loading && !error && totalPages > 1 && (
-                <footer className="p-4 flex items-center justify-center space-x-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage <= 1}
-                    >
-                        <ChevronLeft className="w-4 h-4 mr-1" />
-                        Anterior
-                    </Button>
-
-                    <div className="flex space-x-1">
-                        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                            const page = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
-                            return (
-                                <Button
-                                    key={page}
-                                    variant={page === currentPage ? "default" : "outline"}
-                                    size="sm"
-                                    onClick={() => handlePageChange(page)}
-                                >
-                                    {page}
-                                </Button>
-                            );
-                        })}
-                    </div>
-
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage >= totalPages}
-                    >
-                        Próxima
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                    </Button>
-                </footer>
-            )}
         </div>
     );
 };

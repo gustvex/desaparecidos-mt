@@ -18,6 +18,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
         // Reseta o estado de erro da imagem quando a pessoa muda
         setImageError(false);
     }, [person.urlFoto]);
+
     const getStatus = () => {
         if (person.vivo === undefined) return 'DESAPARECIDA';
         return person.vivo ? 'ENCONTRADA VIVA' : 'DESAPARECIDA';
@@ -25,6 +26,8 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
 
     const getStatusBadge = () => {
         const status = getStatus();
+        // A lógica do badge está correta, usando cores fixas que podem ser
+        // mantidas se você quiser um destaque que não mude com o tema.
         if (status === 'DESAPARECIDA') {
             return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold">Desaparecida</Badge>;
         }
@@ -44,28 +47,32 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
     const getFieldValue = (value: string, defaultValue: string) => {
         return value || defaultValue;
     };
+
     const hasValidPhoto = person.urlFoto && !imageError;
+
     return (
-        <Card className="flex flex-col sm:flex-row w-full p-4 m-2 overflow-hidden transition-shadow duration-300 hover:shadow-xl bg-white sm:max-w-md md:max-w-lg lg:max-w-xl">
-            {/* Foto ocupa a parte esquerda do card em telas maiores e em cima em telas menores */}
-            <div className="relative w-full sm:w-1/2 h-[300px] overflow-hidden rounded-md sm:mr-4 mb-4 sm:mb-0 flex-shrink-0 flex items-center justify-center bg-gray-200">
+        <Card className="flex flex-row p-4 m-4 ">
+            {/* Foto ocupa a parte esquerda em telas maiores e em cima em telas menores */}
+            <div className="w-[200px] h-[236px]">
                 {hasValidPhoto ? (
                     <img
                         src={person.urlFoto}
-                        alt={`Foto de ${getFieldValue(person.nome, 'Pessoa desconhecida')}`}
+                        alt={`Foto de ${getFieldValue(person.nome, "Pessoa desconhecida")}`}
                         className="w-full h-full object-cover"
                         onError={() => setImageError(true)}
                     />
                 ) : (
-                    <User className="w-1/2 h-1/2 text-gray-500" />
+                    <div className="flex items-center justify-center w-full h-full bg-muted">
+                        <User className="w-1/2 h-1/2 text-muted-foreground" />
+                    </div>
                 )}
             </div>
 
-            <CardContent className="flex flex-col justify-between flex-grow p-0 w-[200px]">
-                <div className="flex flex-col space-y-2">
+            <CardContent className="w-[250px]">
+                <div className="flex flex-col gap-1">
                     <div className="flex items-center justify-between">
                         <h3
-                            className="text-lg font-semibold text-foreground"
+                            className="text-lg font-semibold text-foreground truncate"
                             title={getFieldValue(person.nome, "Nome não informado")}
                         >
                             {getFieldValue(person.nome, "Nome não informado")}
@@ -73,32 +80,32 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                     </div>
 
                     <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                        <User className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-700 font-bold">Idade:</span>
+                        <User className="w-4 h-4" />
+                        <span className="text-foreground font-bold">Idade:</span>
                         <span className="truncate">
                             {person.idade ? `${person.idade} anos` : "Não informada"}
                         </span>
                     </div>
 
                     <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                        <VenusAndMars className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-700 font-bold">Sexo:</span>
+                        <VenusAndMars className="w-4 h-4" />
+                        <span className="text-foreground font-bold">Sexo:</span>
                         <span className="truncate">
                             {getFieldValue(person.sexo, "Não informado")}
                         </span>
                     </div>
 
                     <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                        <Calendar className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-700 font-bold whitespace-nowrap">Desde:</span>
+                        <Calendar className="w-4 h-4" />
+                        <span className="text-foreground font-bold whitespace-nowrap">Desde:</span>
                         <span className="truncate">
                             {formatDate(person.ultimaOcorrencia?.dataDesaparecimento)}
                         </span>
                     </div>
 
                     <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                        <MapPin className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-700 font-bold">Local:</span>
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-foreground font-bold">Local:</span>
                         <span
                             className="truncate flex-1"
                             title={getFieldValue(
@@ -113,21 +120,24 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                         </span>
                     </div>
 
-                    {getStatusBadge()}
+                    <div>
+                        {getStatusBadge()}
+                    </div>
+
+                    <div className="mt-4">
+                        <Button
+                            onClick={() => navigate(`/details/${person.id}`)}
+                            className="mt-auto cursor-pointer"
+                        >
+                            <Eye className="w-4 h-4 mr-2" />
+                            Ver Detalhes
+                        </Button>
+                    </div>
                 </div>
 
-                <div>
-                    <Button
-                        onClick={() => navigate(`/details/${person.id}`)}
-                        className="mt-auto cursor-pointer"
-                        variant="outline"
-                    >
-                        <Eye className="w-4 h-4 mr-2" />
-                        Ver Detalhes
-                    </Button>
-                </div>
             </CardContent>
         </Card>
+
     );
 };
 
