@@ -1,14 +1,15 @@
 -----
 
-# Desaparecidos MT
+## Desaparecidos MT
 
-Este projeto, construído com **React** e **TypeScript**, utiliza o **Vite** para um ambiente de desenvolvimento rápido e eficiente. Ele serve como a interface de usuário para a plataforma **Desaparecidos MT**, que tem como objetivo auxiliar na busca por pessoas desaparecidas no estado de Mato Grosso.
+**Desaparecidos MT** é uma plataforma inovadora desenvolvida para auxiliar na busca por pessoas desaparecidas no estado de Mato Grosso. Utilizando tecnologia web, o projeto visa criar uma ponte entre a sociedade e as informações sobre casos de desaparecimento, facilitando o compartilhamento de dados e aumentando as chances de reencontro.
 
------
+### Funcionalidades
 
-### O que é este projeto?
-
-Este repositório contém o código frontend do **Desaparecidos MT**. A aplicação consome dados de uma API para exibir informações de pessoas desaparecidas, permitindo que a comunidade colabore na busca.
+  * **Listagem de Desaparecidos:** Uma galeria intuitiva onde é possível visualizar fotos, nomes e detalhes de pessoas desaparecidas.
+  * **Filtros de Busca:** Facilita a localização de informações específicas através de filtros como nome, cidade e data de desaparecimento.
+  * **Detalhes do Caso:** Ao clicar em um perfil, o usuário tem acesso a informações detalhadas, incluindo idade, características físicas e contatos para denúncias ou informações.
+  * **Contribuição da Comunidade:** A plataforma é construída para permitir a colaboração. Os usuários podem submeter informações relevantes, ajudando a manter os dados atualizados.
 
 -----
 
@@ -17,20 +18,15 @@ Este repositório contém o código frontend do **Desaparecidos MT**. A aplicaç
 Para começar a desenvolver, siga estes passos:
 
 1.  **Clone o repositório:**
-
     ```bash
     git clone https://github.com/gustvex/desaparecidos-mt.git
     cd desaparecidos-mt
     ```
-
 2.  **Instale as dependências:**
-
     ```bash
     npm install
     ```
-
 3.  **Inicie o servidor de desenvolvimento:**
-
     ```bash
     npm run dev
     ```
