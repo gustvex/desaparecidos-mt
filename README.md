@@ -1,70 +1,63 @@
-# React + TypeScript + Vite
+-----
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Desaparecidos MT
 
-Currently, two official plugins are available:
+**Desaparecidos MT** é uma plataforma inovadora desenvolvida para auxiliar na busca por pessoas desaparecidas no estado de Mato Grosso. Utilizando tecnologia web, o projeto visa criar uma ponte entre a sociedade e as informações sobre casos de desaparecimento, facilitando o compartilhamento de dados e aumentando as chances de reencontro.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Funcionalidades
 
-## Expanding the ESLint configuration
+  * **Listagem de Desaparecidos:** Uma galeria intuitiva onde é possível visualizar fotos, nomes e detalhes de pessoas desaparecidas.
+  * **Filtros de Busca:** Facilita a localização de informações específicas através de filtros como nome, cidade e data de desaparecimento.
+  * **Detalhes do Caso:** Ao clicar em um perfil, o usuário tem acesso a informações detalhadas, incluindo idade, características físicas e contatos para denúncias ou informações.
+  * **Contribuição da Comunidade:** A plataforma é construída para permitir a colaboração. Os usuários podem submeter informações relevantes, ajudando a manter os dados atualizados.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+-----
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Instalação e Uso
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Para começar a desenvolver, siga estes passos:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/gustvex/desaparecidos-mt.git
+    cd desaparecidos-mt
+    ```
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
+3.  **Inicie o servidor de desenvolvimento:**
+    ```bash
+    npm run dev
+    ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+O projeto será executado em `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+-----
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# desaparecidos-mt
+### Scripts Disponíveis
+
+No diretório do projeto, você pode rodar os seguintes comandos:
+
+  * **`npm run dev`**: Inicia o servidor de desenvolvimento com *Hot Module Replacement* (HMR).
+  * **`npm run build`**: Compila o projeto para produção.
+  * **`npm run lint`**: Executa o linter para encontrar e corrigir problemas de código.
+  * **`npm run preview`**: Inicia um servidor local para visualizar a build de produção.
+
+-----
+
+### Plugins do Vite
+
+Este projeto utiliza o `@vitejs/plugin-react` para oferecer um desenvolvimento com **Fast Refresh**. Para uma alternativa com melhor desempenho, você pode considerar o uso do `@vitejs/plugin-react-swc`.
+
+-----
+
+### Configuração do ESLint
+
+Para garantir a qualidade do código, o projeto utiliza **ESLint** com regras específicas para **TypeScript** e **React**. Se você precisar de regras mais rigorosas ou específicas, pode expandir a configuração no arquivo `eslint.config.js`.
+
+-----
+
+### Como Contribuir
+
+Sua contribuição é muito bem-vinda\! Se você encontrar um bug, tiver uma sugestão de melhoria ou quiser adicionar novas funcionalidades, sinta-se à vontade para abrir uma **issue** ou um **pull request**.
