@@ -1,4 +1,4 @@
-import type { ApiResponse, PessoaDesaparecidaDTO, SearchFilters } from "./interfaces";
+import type { ApiResponse, InformacaoPayload, InformacaoResponse, PessoaDesaparecidaDTO, SearchFilters } from "./interfaces";
 
 export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Promise<ApiResponse> => {
     const params = new URLSearchParams();
@@ -45,6 +45,43 @@ export const fetchPessoaById = async (id: number): Promise<PessoaDesaparecidaDTO
 
     } catch (error) {
         console.error("Falha ao buscar detalhes da pessoa:", error);
+        throw error;
+    }
+};
+
+export const submitInformacao = async (payload: InformacaoPayload): Promise<InformacaoResponse> => {
+    const { ocorrenciaId, informacao, descricao, files } = payload;
+    const url = 'https://abitus-api.geia.vip/v1/ocorrencias/informacoes-desaparecido';
+
+    const formData = new FormData();
+
+    formData.append('ocoId', ocorrenciaId.toString());
+    formData.append('informacao', informacao);
+    formData.append('descricao', descricao);
+    // formData.append('data', format(data, 'yyyy-MM-dd'));
+
+    if (files && files.length > 0) {
+        files.forEach(file => {
+            formData.append('files', file);
+        });
+    }
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Erro ao enviar informação: ${response.status} - ${errorData.message || response.statusText}`);
+        }
+
+        const result = await response.json();
+        return result;
+
+    } catch (error) {
+        console.error("Falha ao enviar as informações:", error);
         throw error;
     }
 };

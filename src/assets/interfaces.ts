@@ -53,3 +53,18 @@ export interface ApiResponse {
     last: boolean;
     empty: boolean;
 }
+export interface InformacaoPayload {
+    ocorrenciaId: number;
+    informacao: string;
+    descricao: string;
+    // data: Date;
+    files: File[];
+}
+
+export interface InformacaoResponse {
+    ocoId: number;
+    informacao: string;
+    data: string;
+    id: number;
+    anexos: string[];
+}

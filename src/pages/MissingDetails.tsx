@@ -10,13 +10,11 @@ import {
     Phone,
     Plus,
     Info,
-    Camera,
     VenusAndMars,
     Clock,
     AlertTriangle,
     Eye,
     FileText,
-    Printer,
     Heart,
     Search,
     Download,
@@ -26,7 +24,6 @@ import { fetchPessoaById } from "@/assets/api";
 import { formatDate, getFieldValue } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import PageHeader from "@/components/missing/utils/PageHeader";
 
 const MissingDetails = () => {
     const { id } = useParams<{ id: string }>();
@@ -122,21 +119,7 @@ const MissingDetails = () => {
 
     return (
         <div className="min-h-screen bg-background">
-            <div className="top-0 w-full">
-                <div className="flex flex-col container mx-auto gap-4">
-                    <PageHeader />
-                    <div className="flex items-center justify-between mb-6">
-                        <Button
-                            onClick={() => navigate("/")}
-                            className=" "
-                        >
-                            <ArrowLeft className="w-4 h-4 mr-2" />
-                            Voltar à Lista
-                        </Button>
-
-                    </div>
-                </div>
-            </div>
+          
             <div>
                 <main className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
@@ -333,40 +316,21 @@ const MissingDetails = () => {
                         </div>
 
                         <div className="xl:col-span-1 space-y-6">
-
                             <Card className="border-primary">
                                 <CardHeader>
                                     <CardTitle className="text-lg text-primary">Como Você Pode Ajudar</CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     <p className="text-sm text-muted-foreground">
-                                        <strong>Sua informação pode ser crucial!</strong> Qualquer detalhe, por menor que pareça, pode ajudar a encontrar esta pessoa.
+                                        <strong>Suas informações podem ser crucial!</strong> Qualquer detalhe, por menor que pareça, pode ajudar a encontrar esta pessoa.
                                     </p>
-                                    <div className="space-y-3">
-                                        <Button
-                                            className="w-full font-semibold"
-                                            onClick={() => navigate(`/pessoa/${person.id}/informar`)}
-                                        >
-                                            <Plus className="w-4 h-4 mr-2" />
-                                            Informar Localização
-                                        </Button>
-                                        <Button
-                                            variant="outline"
-                                            className="w-full"
-                                            onClick={() => navigate(`/pessoa/${person.id}/enviar-foto`)}
-                                        >
-                                            <Camera className="w-4 h-4 mr-2" />
-                                            Enviar Foto Recente
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            className="w-full"
-                                            onClick={() => window.print()}
-                                        >
-                                            <Printer className="w-4 h-4 mr-2" />
-                                            Imprimir Cartaz
-                                        </Button>
-                                    </div>
+                                    <Button
+                                        className="w-full font-semibold"
+                                        onClick={() => navigate(`/details/form/${person.id}`)}
+                                    >
+                                        <Plus className="w-4 h-4 mr-2" />
+                                        Adicionar informações
+                                    </Button>
                                 </CardContent>
                             </Card>
 
