@@ -19,8 +19,7 @@ const Pagination = ({
     error,
     totalPages,
     onPageChange,
-    showFirstLast = false,
-    maxVisiblePages = 5
+    maxVisiblePages = 1
 }: PaginationProps) => {
 
     const handlePageChange = (page: number) => {
@@ -56,18 +55,6 @@ const Pagination = ({
     return (
         <div className='flex flex-col gap-4'>
             <div className="flex flex-wrap items-center justify-center gap-4">
-                {showFirstLast && currentPage > 1 && (
-                    <>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handlePageChange(1)}
-                            className=' '
-                        >
-                            Primeira
-                        </Button>
-                    </>
-                )}
 
                 <Button
                     variant="outline"
@@ -137,19 +124,6 @@ const Pagination = ({
                     Próxima
                     <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
-
-                {showFirstLast && currentPage < totalPages && (
-                    <>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className=' '
-                            onClick={() => handlePageChange(totalPages)}
-                        >
-                            Última
-                        </Button>
-                    </>
-                )}
 
             </div>
             <div className='flex justify-center'>
