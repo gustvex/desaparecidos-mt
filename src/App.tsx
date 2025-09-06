@@ -5,6 +5,7 @@ import { ThemeProvider } from './components/theme/theme-provider';
 import Layout from './layout/Layout';
 
 const MissingList = lazy(() => import('./pages/MissingList'));
+const MissingDetails = lazy(() => import('./pages/MissingDetails'));
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<MissingList />} />
+              <Route path='/details/:id' element={<MissingDetails />} />
             </Route>
           </Routes>
         </Suspense>

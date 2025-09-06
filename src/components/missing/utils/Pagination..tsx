@@ -62,7 +62,7 @@ const Pagination = ({
                             variant="outline"
                             size="sm"
                             onClick={() => handlePageChange(1)}
-                            className='cursor-pointer'
+                            className=' '
                         >
                             Primeira
                         </Button>
@@ -143,7 +143,7 @@ const Pagination = ({
                         <Button
                             variant="outline"
                             size="sm"
-                            className='cursor-pointer'
+                            className=' '
                             onClick={() => handlePageChange(totalPages)}
                         >
                             Última

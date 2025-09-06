@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, User, Eye, VenusAndMars } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { PessoaDesaparecidaDTO } from '@/assets/interfaces';
+import { formatDate, getFieldValue } from '@/lib/utils';
 
 interface CardProps {
     person: PessoaDesaparecidaDTO;
@@ -23,22 +24,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
         return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold">Desaparecida</Badge>;
     };
 
-    const formatDate = (dateInput?: string | Date) => {
-        if (!dateInput) return "Não informada";
-        try {
-            const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
-            return date.toLocaleDateString("pt-BR");
-        } catch {
-            return "Data inválida";
-        }
-    };
 
-    const getFieldValue = (value: string | undefined | null, defaultValue: string) => {
-        if (value === undefined || value === null || value === '') {
-            return defaultValue;
-        }
-        return value;
-    };
 
     return (
         <Card className="flex flex-row p-4 m-4">
@@ -106,7 +92,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                     <div className="mt-auto">
                         <Button
                             onClick={() => navigate(`/details/${person.id}`)}
-                            className="w-full cursor-pointer"
+                            className="w-full  "
                         >
                             <Eye className="w-4 h-4 mr-2" />
                             Ver Detalhes

@@ -44,7 +44,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                         onClick={() => setShowAdvanced(!showAdvanced)}
                         variant="outline"
                         size="default"
-                        className="cursor-pointer"
+                        className=" "
                     >
                         <Filter className="w-4 h-4 mr-2" />
                         Filtros
@@ -53,8 +53,8 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     <Button
                         onClick={handleSearch}
                         disabled={loading}
-                        className="cursor-pointer px-6"
-                    
+                        className="  px-6"
+
                     >
                         <Search className="w-4 h-4 mr-2" />
                         Buscar
@@ -134,7 +134,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                             <div className="flex justify-end">
                                 <Button
                                     onClick={handleClear}
-                                    className="cursor-pointer"
+                                    className=" "
                                     variant="outline"
                                     size="sm"
 
