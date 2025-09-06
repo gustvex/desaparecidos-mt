@@ -1,8 +1,8 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import SearchBar from "./utils/SearchBar";
-import Pagination from "./utils/Pagination.";
-import PageHeader from "./utils/PageHeader";
+import SearchBar from "./SearchBar";
+import PageHeader from "./PageHeader";
+import Pagination from "./Pagination.";
 
 
 interface MissingListManagerProps {

@@ -43,8 +43,6 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     <Button
                         onClick={() => setShowAdvanced(!showAdvanced)}
                         variant="outline"
-                        size="default"
-                        className=" "
                     >
                         <Filter className="w-4 h-4 mr-2" />
                         Filtros
@@ -134,10 +132,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                             <div className="flex justify-end">
                                 <Button
                                     onClick={handleClear}
-                                    className=" "
                                     variant="outline"
-                                    size="sm"
-
                                 >
                                     <X className="w-4 h-4 mr-2" />
                                     Limpar

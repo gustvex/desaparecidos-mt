@@ -1,4 +1,4 @@
-import Header from '@/components/PageHeader';
+import Header from '@/components/theme/page-header';
 import { Toaster } from '@/components/ui/sonner';
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <main className="px-4 py-8">
                 {children ? children : <Outlet />}
             </main>
-           
+
         </div>
     );
 };

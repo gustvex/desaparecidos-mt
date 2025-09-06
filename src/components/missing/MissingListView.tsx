@@ -1,8 +1,8 @@
 import { Users } from "lucide-react";
-import PersonCard from "../PersonCard";
-import SkeletonList from "./utils/SkeletonList";
-import type {  PessoaDesaparecidaDTO, SearchFilters } from "@/assets/interfaces";
+import PersonCard from "./PersonCard";
+import type { PessoaDesaparecidaDTO, SearchFilters } from "@/assets/interfaces";
 import MissingListManager from "./MissingListManager";
+import { Spinner } from "../ui/shadcn-io/spinner";
 
 
 interface Props {
@@ -39,7 +39,9 @@ const MissingListView = ({
             />
 
             <main className="flex overflow-y-auto">
-                {loading && <SkeletonList />}
+                {loading && <div className="fixed inset-0 flex items-center justify-center">
+                    <Spinner variant="default" size={32} />
+                </div>}
                 {!loading && !error && people.length > 0 && (
                     <div className="flex flex-wrap justify-center">
                         {people.map((person) => (

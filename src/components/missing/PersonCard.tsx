@@ -19,9 +19,9 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
 
     const getStatusBadge = () => {
         if (person.vivo) {
-            return <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold">Encontrada Viva</Badge>;
+            return <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold text-md">Encontrada Viva</Badge>;
         }
-        return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold">Desaparecida</Badge>;
+        return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Desaparecida</Badge>;
     };
 
 
@@ -52,7 +52,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                             {getFieldValue(person.nome, "Nome não informado")}
                         </h3>
 
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <div className="flex items-center space-x-2 text-lg text-muted-foreground">
                             <User className="w-4 h-4" />
                             <span className="text-foreground font-bold">Idade:</span>
                             <span className="truncate">
@@ -60,7 +60,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                             </span>
                         </div>
 
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <div className="flex items-center space-x-2 text-lg text-muted-foreground">
                             <VenusAndMars className="w-4 h-4" />
                             <span className="text-foreground font-bold">Sexo:</span>
                             <span className="truncate">
@@ -68,7 +68,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                             </span>
                         </div>
 
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <div className="flex items-center space-x-2 text-lg text-muted-foreground">
                             <Calendar className="w-4 h-4" />
                             <span className="text-foreground font-bold whitespace-nowrap">Desde:</span>
                             <span className="truncate">
@@ -76,7 +76,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                             </span>
                         </div>
 
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <div className="flex items-center space-x-2 text-lg text-muted-foreground">
                             <MapPin className="w-4 h-4" />
                             <span className="text-foreground font-bold">Local:</span>
                             <span className="truncate">
@@ -92,7 +92,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                     <div className="mt-4">
                         <Button
                             onClick={() => navigate(`/details/${person.id}`)}
-                            className="w-full  "
+                            className="w-full font-bold"
                         >
                             <Eye className="w-4 h-4 mr-2" />
                             Ver Detalhes

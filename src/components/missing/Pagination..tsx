@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
+
 
 interface PaginationProps {
     loading?: boolean;
@@ -58,7 +59,6 @@ const Pagination = ({
 
                 <Button
                     variant="outline"
-                    size="sm"
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage <= 1}
                 >
@@ -70,7 +70,7 @@ const Pagination = ({
                     <>
                         <Button
                             variant="outline"
-                            size="sm"
+    
                             onClick={() => handlePageChange(1)}
                         >
                             1
@@ -88,7 +88,7 @@ const Pagination = ({
                         <Button
                             key={page}
                             variant={page === currentPage ? "default" : "outline"}
-                            size="sm"
+    
                             onClick={() => handlePageChange(page)}
                             className={page === currentPage ? "font-semibold" : ""}
                         >
@@ -107,7 +107,7 @@ const Pagination = ({
                         )}
                         <Button
                             variant="outline"
-                            size="sm"
+    
                             onClick={() => handlePageChange(totalPages)}
                         >
                             {totalPages}
@@ -117,7 +117,6 @@ const Pagination = ({
 
                 <Button
                     variant="outline"
-                    size="sm"
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage >= totalPages}
                 >
@@ -128,7 +127,7 @@ const Pagination = ({
             </div>
             <div className='flex justify-center'>
                 {!loading && !error && (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-lg text-muted-foreground">
                         {totalRecords > 0
                             ? `Exibindo ${totalRecords} registros (Página ${currentPage} de ${totalPages})`
                             : 'Nenhum registro encontrado'
