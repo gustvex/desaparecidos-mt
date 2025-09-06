@@ -1,7 +1,7 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import SearchBar from "./SearchBar";
-import PageHeader from "./PageHeader";
+// import PageHeader from "./PageHeader";
 import Pagination from "./Pagination.";
 
 
@@ -27,8 +27,7 @@ const MissingListManager = ({
     return (
         <div className="top-0 w-full bg-background">
             <div className="flex flex-col container mx-auto gap-4">
-                <PageHeader />
-
+          
                 <SearchBar onSearch={onSearch} loading={loading} />
 
                 <Pagination

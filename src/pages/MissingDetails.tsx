@@ -7,7 +7,7 @@ import type { PessoaDesaparecidaDTO } from "@/assets/interfaces";
 import { fetchPessoaById } from "@/assets/api";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import CardPerson from "@/components/details/CardPerson";
-import FormMissing from "@/components/details/FormMissing";
+import FormMissing from "@/components/details/MissingInfo";
 import DetailsOccurrence from "@/components/details/DetailsOccurrence";
 import Emergency from "@/components/details/Emergency";
 import Posters from "@/components/details/Posters";
@@ -54,7 +54,7 @@ const MissingDetails = () => {
                 <div className="container mx-auto grid grid-cols-1 xl:grid-cols-4 gap-6">
                     <div className="xl:col-span-3 space-y-8">
                         <CardPerson person={person} daysMissing={daysMissing} />
-                        <FormMissing />
+                        <FormMissing ocoId={person.ultimaOcorrencia.ocoId} />
                         <DetailsOccurrence person={person} />
                     </div>
 
