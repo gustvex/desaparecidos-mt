@@ -1,31 +1,16 @@
-import type { Pessoa } from "@/assets/interfaces";
+import type { ApiResponse, SearchFilters } from "./interfaces";
 
-export interface SearchFilters {
-    nome?: string;
-    status?: "DESAPARECIDO" | "LOCALIZADO" | "";
-    localDesaparecimento?: string;
-    idadeMin?: number;
-    idadeMax?: number;
-}
-
-export interface ApiResponse {
-    content: Pessoa[];
-    totalPages: number;
-    totalElements: number;
-    number: number;
-    size: number;
-}
-
-export const fetchPessoas = async (filters: SearchFilters = {}, page = 1): Promise<ApiResponse> => {
+export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Promise<ApiResponse> => {
     const params = new URLSearchParams();
-    params.append('page', (page - 1).toString());
-    params.append('size', '10');
+
+    params.append('pagina', pagina.toString());
+    params.append('porPagina', '10');
 
     if (filters.nome) params.append('nome', filters.nome);
     if (filters.status) params.append('status', filters.status);
-    if (filters.localDesaparecimento) params.append('localDesaparecimento', filters.localDesaparecimento);
-    if (filters.idadeMin) params.append('idadeMin', filters.idadeMin.toString());
-    if (filters.idadeMax) params.append('idadeMax', filters.idadeMax.toString());
+    if (filters.sexo) params.append('sexo', filters.sexo);
+    if (filters.faixaIdadeInicial) params.append('faixaIdadeInicial', filters.faixaIdadeInicial.toString());
+    if (filters.faixaIdadeFinal) params.append('faixaIdadeFinal', filters.faixaIdadeFinal.toString());
 
     const response = await fetch(`https://abitus-api.geia.vip/v1/pessoas/aberto/filtro?${params.toString()}`);
 
@@ -33,5 +18,6 @@ export const fetchPessoas = async (filters: SearchFilters = {}, page = 1): Promi
         throw new Error(`Erro ${response.status}: ${response.statusText}`);
     }
 
-    return await response.json();
+    const data: ApiResponse = await response.json();
+    return data;
 };

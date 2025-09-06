@@ -1,76 +1,55 @@
-// --- Interfaces de Paginação ---
 
-export interface Ordenacao {
-    naoOrdenado: boolean;
-    ordenado: boolean;
-    vazio: boolean;
-}
-
-export interface Pageable {
-    semPagina: boolean;
-    numeroPagina: number;
-    paginado: boolean;
-    tamanhoPagina: number;
-    deslocamento: number;
-    ordenacao: Ordenacao;
-}
-
-export interface RespostaPaginada<T> {
-    totalPages: number;
-    totalElements: number;
-    pageable: Pageable;
-    numeroDeElementos: number;
-    primeiro: boolean;
-    ultimo: boolean;
-    tamanho: number;
-    content: T[];
-    numero: number;
-    ordenacao: Ordenacao;
-    vazio: boolean;
-}
-
-// --- Tipos relacionados a Pessoa ---
-
-export const Sexo = {
-    MASCULINO: "MASCULINO",
-    FEMININO: "FEMININO",
-    OUTRO: "OUTRO",
-} as const;
-
-export interface Pessoa {
+export interface PessoaDesaparecidaDTO {
     id: number;
     nome: string;
     idade: number;
-    sexo: typeof Sexo[keyof typeof Sexo];
+    sexo: "MASCULINO" | "FEMININO";
     vivo: boolean;
     urlFoto: string;
-    ultimaOcorrencia: UltimaOcorrencia;
+    ultimaOcorrencia: UltimaOcorrenciaDTO;
 }
 
-// --- Interfaces de Ocorrência e Cartaz ---
-
-export interface UltimaOcorrencia {
-    dataDesaparecimento: Date;
-    dataLocalizacao: Date | null;
-    encontradoVivo: boolean;
-    localDesaparecimentoConcat: string;
-    ocorrenciaEntrevistaDTO: OcorrenciaEntrevistaDTO;
-    listaCartazes: Cartaz[];
-    idOcorrencia: number;
+export interface UltimaOcorrenciaDTO {
+    dtDesaparecimento?: string;
+    dataLocalizacao?: string;
+    encontradoVivo?: boolean;
+    localDesaparecimentoConcat?: string;
+    ocorrenciaEntrevDesapDTO?: OcorrenciaEntrevDesapDTO;
+    listaCartaz?: CartazDTO[];
+    ocoId?: number;
 }
 
-export interface OcorrenciaEntrevistaDTO {
-    informacoes: string;
-    roupasPessoaDesaparecida: string;
+export interface OcorrenciaEntrevDesapDTO {
+    informacao: string;
+    vestimentasDesaparecido: string;
 }
 
-export const TipoCartaz = {
-    PDF_DESAPARECIDO: "PDF_DESAPARECIDO",
-    IMAGEM_DESAPARECIDO: "IMAGEM_DESAPARECIDO",
-    OUTRO: "OUTRO",
-} as const;
-
-export interface Cartaz {
+export interface CartazDTO {
     urlCartaz: string;
-    tipoCartaz: typeof TipoCartaz[keyof typeof TipoCartaz];
+    tipoCartaz: "PDF_DESAPARECIDO" | "JPG_DESAPARECIDO" | "PDF_ENCONTRADO" | "JPG_ENCONTRADO";
+}
+
+export interface SearchFilters {
+    nome?: string;
+    status?: "DESAPARECIDO" | "LOCALIZADO" | "";
+    sexo?: "MASCULINO" | "FEMININO" | "";
+    faixaIdadeInicial?: number;
+    faixaIdadeFinal?: number;
+}
+
+export interface ApiResponse {
+    content: PessoaDesaparecidaDTO[];
+    totalPages: number;
+    totalElements: number;
+    number: number;
+    size: number;
+    sort: {
+        empty: boolean;
+        sorted: boolean;
+        unsorted: boolean;
+    };
+    numberOfElements: number;
+    first: boolean;
+    last: boolean;
+    empty: boolean;
 }

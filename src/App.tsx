@@ -4,7 +4,7 @@ import { Spinner } from './components/ui/shadcn-io/spinner';
 import { ThemeProvider } from './components/theme/theme-provider';
 import Layout from './layout/Layout';
 
-const HomePage = lazy(() => import('./pages/MissingList'));
+const MissingList = lazy(() => import('./pages/MissingList'));
 
 const App: React.FC = () => {
   return (
@@ -17,7 +17,7 @@ const App: React.FC = () => {
         }>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
+              <Route index element={<MissingList />} />
             </Route>
           </Routes>
         </Suspense>
