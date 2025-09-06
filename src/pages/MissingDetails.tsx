@@ -24,6 +24,7 @@ import { fetchPessoaById } from "@/assets/api";
 import { formatDate, getFieldValue } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import MissingInfo from "./MissingInfo";
 
 const MissingDetails = () => {
     const { id } = useParams<{ id: string }>();
@@ -31,6 +32,7 @@ const MissingDetails = () => {
     const [person, setPerson] = useState<PessoaDesaparecidaDTO>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
         if (!id) {
@@ -119,7 +121,6 @@ const MissingDetails = () => {
 
     return (
         <div className="min-h-screen bg-background">
-          
             <div>
                 <main className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
@@ -158,7 +159,6 @@ const MissingDetails = () => {
                                                 )}
                                             </div>
                                         </div>
-
                                         <div className="flex-1 space-y-6">
                                             <div>
                                                 <h3 className="text-xl font-bold text-foreground mb-4 flex items-center">
@@ -194,7 +194,6 @@ const MissingDetails = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     <div className="space-y-3">
                                                         <div className="flex items-center space-x-3">
                                                             <Calendar className="w-4 h-4 text-muted-foreground" />
@@ -228,7 +227,6 @@ const MissingDetails = () => {
                                                     </div>
                                                 </div>
                                             </div>
-
                                             {person.vivo && person.ultimaOcorrencia?.dataLocalizacao && (
                                                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                                                     <h4 className="text-lg font-bold text-green-800 mb-2 flex items-center">
@@ -242,6 +240,32 @@ const MissingDetails = () => {
                                             )}
                                         </div>
                                     </div>
+                                </CardContent>
+                            </Card>
+
+
+                            <Card className="border-primary">
+
+                                <CardContent className="space-y-4">
+                                    {showForm ? (
+                                        <MissingInfo onCancel={() => setShowForm(false)} />
+                                    ) : (
+                                        <div className="flex flex-col gap-4">
+
+                                            <CardTitle className="text-lg text-primary">Como Você Pode Ajudar</CardTitle>
+
+                                            <p className="text-sm text-muted-foreground">
+                                                <strong>Suas informações podem ser cruciais!</strong> Qualquer detalhe, por menor que pareça, pode ajudar a encontrar esta pessoa.
+                                            </p>
+                                            <Button
+                                                className="w-full font-semibold"
+                                                onClick={() => setShowForm(true)}
+                                            >
+                                                <Plus className="w-4 h-4 mr-2" />
+                                                Adicionar informações
+                                            </Button>
+                                        </div>
+                                    )}
                                 </CardContent>
                             </Card>
 
@@ -264,8 +288,6 @@ const MissingDetails = () => {
                                             </p>
                                         </div>
                                     </div>
-
-
                                     <div>
                                         <Separator className="my-4" />
                                         <h4 className="text-lg font-bold text-foreground mb-3 flex items-center">
@@ -278,10 +300,10 @@ const MissingDetails = () => {
                                             </p>
                                         </div>
                                     </div>
-
                                 </CardContent>
                             </Card>
-
+                        </div>
+                        <div className="xl:col-span-1 space-y-6">
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center space-x-2 text-xl">
@@ -311,29 +333,7 @@ const MissingDetails = () => {
                                         )}
                                     </div>
                                 </CardContent>
-
                             </Card>
-                        </div>
-
-                        <div className="xl:col-span-1 space-y-6">
-                            <Card className="border-primary">
-                                <CardHeader>
-                                    <CardTitle className="text-lg text-primary">Como Você Pode Ajudar</CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                    <p className="text-sm text-muted-foreground">
-                                        <strong>Suas informações podem ser crucial!</strong> Qualquer detalhe, por menor que pareça, pode ajudar a encontrar esta pessoa.
-                                    </p>
-                                    <Button
-                                        className="w-full font-semibold"
-                                        onClick={() => navigate(`/details/form/${person.id}`)}
-                                    >
-                                        <Plus className="w-4 h-4 mr-2" />
-                                        Adicionar informações
-                                    </Button>
-                                </CardContent>
-                            </Card>
-
                             <Card className="border-destructive">
                                 <CardHeader>
                                     <CardTitle className="text-destructive flex items-center">

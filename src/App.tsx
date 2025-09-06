@@ -6,7 +6,6 @@ import Layout from './layout/Layout';
 
 const MissingList = lazy(() => import('./pages/MissingList'));
 const MissingDetails = lazy(() => import('./pages/MissingDetails'));
-const MissingInfo = lazy(() => import('./pages/MissingInfo'));
 
 const App: React.FC = () => {
   return (
@@ -21,7 +20,6 @@ const App: React.FC = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<MissingList />} />
               <Route path='/details/:id' element={<MissingDetails />} />
-              <Route path='/details/form/:id' element={<MissingInfo />} />
             </Route>
           </Routes>
         </Suspense>
