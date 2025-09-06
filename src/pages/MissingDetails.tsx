@@ -6,7 +6,7 @@ import {
 import type { PessoaDesaparecidaDTO } from "@/assets/interfaces";
 import { fetchPessoaById } from "@/assets/api";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
-import CardPerson from "@/components/details/CardPerson";
+import CardPerson from "@/components/details/PersonCardDetails";
 import FormMissing from "@/components/details/MissingInfo";
 import DetailsOccurrence from "@/components/details/DetailsOccurrence";
 import Emergency from "@/components/details/Emergency";

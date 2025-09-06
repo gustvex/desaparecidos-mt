@@ -50,7 +50,7 @@ const MissingListContainer = () => {
         newParams.set("pagina", (page - 1).toString());
         setSearchParams(newParams);
     };
-
+    console.log(apiResponse?.content);
     return (
         <div className="flex flex-col">
             <MissingListManager

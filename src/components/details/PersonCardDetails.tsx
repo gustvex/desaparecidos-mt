@@ -10,20 +10,17 @@ interface Props {
 }
 
 const CardPerson = ({ person, daysMissing }: Props) => {
-    const getStatusBadge = () => {
-        if (person) {
-            return (
-                <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold text-lg px-4 py-2">
-                    ENCONTRADA VIVA
-                </Badge>
-            );
-        }
-        return (
-            <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-lg px-4 py-2">
-                DESAPARECIDA
-            </Badge>
-        );
+    
+   const getStatusBadge = () => {
+          if (person.ultimaOcorrencia?.dataLocalizacao) {
+              if (person.vivo) {
+                  return <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold text-md">Localizada Viva</Badge>;
+              }
+              return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Localizada Morta</Badge>;
+          }
+          return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Desaparecida</Badge>;
     };
+    
     return (
         <Card className="flex">
             <CardHeader className="pb-4">

@@ -15,16 +15,15 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
     const [imageError, setImageError] = useState(false);
     const navigate = useNavigate();
 
-
-
     const getStatusBadge = () => {
-        if (person.vivo) {
-            return <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold text-md">Encontrada Viva</Badge>;
+        if (person.ultimaOcorrencia?.dataLocalizacao) {
+            if (person.vivo) {
+                return <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold text-md">Localizada Viva</Badge>;
+            }
+            return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Localizada Morta</Badge>;
         }
         return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Desaparecida</Badge>;
     };
-
-
 
     return (
         <Card className="flex flex-col justify-center items-center md:flex-row  p-4 m-4">

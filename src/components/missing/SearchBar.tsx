@@ -73,6 +73,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                                         Status
                                     </label>
                                     <Select
+                                        value={filters.status || "TODOS"}
                                         onValueChange={(value) => updateFilter("status", value === "TODOS" ? undefined : value)}
                                     >
                                         <SelectTrigger className="w-[185px]">
@@ -91,9 +92,8 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                                         Sexo
                                     </label>
                                     <Select
-                                        onValueChange={(value) => updateFilter("sexo", value === "TODOS" ? undefined : value)}
-
-                                    >
+                                        value={filters.sexo || "TODOS"}
+                                        onValueChange={(value) => updateFilter("sexo", value === "TODOS" ? undefined : value)}>
                                         <SelectTrigger className="w-[185px]">
                                             <SelectValue placeholder="Todos" />
                                         </SelectTrigger>
