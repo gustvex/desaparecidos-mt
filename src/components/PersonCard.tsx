@@ -27,7 +27,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
 
 
     return (
-        <Card className="flex flex-row p-4 m-4">
+        <Card className="flex flex-col justify-center items-center md:flex-row  p-4 m-4">
             <div className="w-[200px] h-[236px] flex-shrink-0">
                 {person.urlFoto && !imageError ? (
                     <img
@@ -89,7 +89,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                         </div>
                     </div>
 
-                    <div className="mt-auto">
+                    <div className="mt-4">
                         <Button
                             onClick={() => navigate(`/details/${person.id}`)}
                             className="w-full  "

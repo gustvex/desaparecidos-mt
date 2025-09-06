@@ -1,3 +1,4 @@
+import axios from "axios";
 import type { ApiResponse, InformacaoPayload, InformacaoResponse, PessoaDesaparecidaDTO, SearchFilters } from "./interfaces";
 
 export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Promise<ApiResponse> => {
@@ -21,7 +22,6 @@ export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Pro
     const data: ApiResponse = await response.json();
     return data;
 };
-
 
 export const fetchPessoaById = async (id: number): Promise<PessoaDesaparecidaDTO> => {
     if (typeof id !== 'number' || id <= 0) {
@@ -49,39 +49,55 @@ export const fetchPessoaById = async (id: number): Promise<PessoaDesaparecidaDTO
     }
 };
 
-export const submitInformacao = async (payload: InformacaoPayload): Promise<InformacaoResponse> => {
-    const { ocorrenciaId, informacao, descricao, files } = payload;
-    const url = 'https://abitus-api.geia.vip/v1/ocorrencias/informacoes-desaparecido';
+
+export const submitInformacao = async (
+    payload: InformacaoPayload
+): Promise<InformacaoResponse> => {
+    const { ocorrenciaId, informacao, descricao, data, files } = payload;
+    const url = "https://abitus-api.geia.vip/v1/ocorrencias/informacoes-desaparecido";
 
     const formData = new FormData();
+    formData.append("ocoId", ocorrenciaId.toString());
+    formData.append("informacao", informacao);
+    formData.append("descricao", descricao);
 
-    formData.append('ocoId', ocorrenciaId.toString());
-    formData.append('informacao', informacao);
-    formData.append('descricao', descricao);
-    // formData.append('data', format(data, 'yyyy-MM-dd'));
+    // garantir formato yyyy-MM-dd
+    const formattedDate =
+        typeof data === "string"
+            ? data
+            : data.toISOString().split("T")[0];
+
+    formData.append("data", formattedDate);
 
     if (files && files.length > 0) {
-        files.forEach(file => {
-            formData.append('files', file);
+        files.forEach((file) => {
+            formData.append("files", file);
         });
     }
 
+    // for (const [key, value] of formData.entries()) {
+    //     console.log(`${key}:`, value);
+    // }
+
+
     try {
-        const response = await fetch(url, {
-            method: 'POST',
-            body: formData,
+        const response = await axios.post<InformacaoResponse>(url, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
         });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Erro ao enviar informação: ${response.status} - ${errorData.message || response.statusText}`);
+        return response.data;
+    } catch (error: any) {
+        console.error("Falha ao enviar as informações:", error);
+
+        if (axios.isAxiosError(error) && error.response) {
+            throw new Error(
+                `Erro ao enviar informação: ${error.response.status} - ${(error.response.data as any)?.message || error.response.statusText
+                }`
+            );
         }
 
-        const result = await response.json();
-        return result;
-
-    } catch (error) {
-        console.error("Falha ao enviar as informações:", error);
         throw error;
     }
 };

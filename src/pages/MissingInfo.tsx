@@ -129,7 +129,7 @@ const MissingInfo = ({ onCancel }: MissingInfoProps) => {
                             <ArrowLeft className="w-4 h-4 mr-2" />
                             Voltar
                         </Button>
-                   </div>
+                    </div>
                 </form>
 
             </CardContent>

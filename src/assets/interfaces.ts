@@ -57,8 +57,8 @@ export interface InformacaoPayload {
     ocorrenciaId: number;
     informacao: string;
     descricao: string;
-    // data: Date;
-    files: File[];
+    data: Date; // ou string no formato yyyy-MM-dd, dependendo do seu modelo
+    files?: File[];
 }
 
 export interface InformacaoResponse {

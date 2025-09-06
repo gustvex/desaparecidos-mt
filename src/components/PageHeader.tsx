@@ -2,7 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./theme/mode-toggle";
 import { useNavigate } from "react-router-dom";
-const Header = () => {
+const PageHeader = () => {
     const navigate = useNavigate();
     return (
         <div className="top-0 w-full">
@@ -26,4 +26,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default PageHeader;

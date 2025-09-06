@@ -125,9 +125,9 @@ const MissingDetails = () => {
                 <main className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
                         <div className="xl:col-span-3 space-y-8">
-                            <Card className="border-2">
+                            <Card className="flex">
                                 <CardHeader className="pb-4">
-                                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                                    <div className="flex flex-col justify-center  items-center sm:flex-row sm:items-start sm:justify-between gap-4">
                                         <div className="space-y-2">
                                             <CardTitle className="text-3xl font-bold text-foreground">
                                                 {getFieldValue(person.nome, "Nome não informado")}
@@ -140,7 +140,7 @@ const MissingDetails = () => {
                                     </div>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="flex flex-col lg:flex-row gap-8">
+                                    <div className="flex justify-center  items-center flex-col lg:flex-row gap-8">
                                         <div className="flex-shrink-0">
                                             <div className="w-48 h-48 bg-muted rounded-lg flex items-center justify-center overflow-hidden border-2 border-border">
                                                 {person.urlFoto ? (
@@ -243,9 +243,7 @@ const MissingDetails = () => {
                                 </CardContent>
                             </Card>
 
-
                             <Card className="border-primary">
-
                                 <CardContent className="space-y-4">
                                     {showForm ? (
                                         <MissingInfo onCancel={() => setShowForm(false)} />
@@ -308,7 +306,7 @@ const MissingDetails = () => {
                                 <CardHeader>
                                     <CardTitle className="flex items-center space-x-2 text-xl">
                                         <FileText className="w-6 h-6 text-primary" />
-                                        <span>Cartazes e Materiais de Divulgação</span>
+                                        <span>Cartazes</span>
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
@@ -318,9 +316,9 @@ const MissingDetails = () => {
                                                 <Button
                                                     key={index}
                                                     variant="outline"
-                                                    size="sm"
+                                                    size="lg"
                                                     onClick={() => window.open(cartaz.urlCartaz, '_blank')}
-                                                    className="w-full"
+                                                    className="w-[200px]"
                                                 >
                                                     <Download className="w-4 h-4 mr-2" />
                                                     Baixar Cartaz

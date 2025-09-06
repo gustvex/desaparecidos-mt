@@ -1,4 +1,4 @@
-import Header from '@/components/header';
+import Header from '@/components/PageHeader';
 import { Toaster } from '@/components/ui/sonner';
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
