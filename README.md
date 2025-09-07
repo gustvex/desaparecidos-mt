@@ -1,8 +1,14 @@
+Com certeza. A documentação da lógica de status pode ficar mais concisa e direta.
+
+Aqui está a versão do `README.md` com a seção "Lógica para Tags de Status" simplificada, e a seção "Página de Detalhes" atualizada.
+
+-----
+
 ### **`README.md`**
 
 # Projeto Prático: Pessoas Desaparecidas - Mato Grosso
 
-Este projeto é uma **Single Page Application (SPA)** desenvolvida como parte de um teste técnico para a Polícia Judiciária Civil de Mato Grosso. O objetivo é fornecer uma interface para que cidadãos possam consultar e enviar informações sobre pessoas desaparecidas ou localizadas.
+Este projeto é uma **Single Page Application (SPA)** desenvolvida como parte de um teste técnico. O objetivo é fornecer uma interface para que cidadãos possam consultar e enviar informações sobre pessoas desaparecidas ou localizadas.
 
 -----
 
@@ -17,11 +23,12 @@ A aplicação consome a API oficial da Polícia Judiciária Civil de Mato Grosso
       * Paginação para exibir no mínimo 10 registros por página.
       * Campo de busca para consulta de registros.
   * **Página de Detalhes**:
-      * Exibição de informações completas da pessoa.
-      * Destaque visual para o status "Desaparecida" ou "Localizada".
+      * **Exibição de informações completas da pessoa, com destaque visual para os status `Localizada Viva`, `Localizada Morta` ou `Desaparecida`.**
   * **Envio de Informações Adicionais**:
       * Formulário para o cidadão enviar observações, localização e fotos.
       * Campos com máscaras de entrada (ex: datas).
+  * **Temas Personalizáveis**:
+      * Suporte para múltiplos temas (`light` e `dark`), permitindo que o usuário altere a aparência da aplicação.
 
 -----
 
@@ -34,6 +41,16 @@ O projeto foi construído utilizando as seguintes ferramentas e bibliotecas:
   * **Rotas**: `React Router Dom` para navegação.
   * **Requisições API**: `axios`.
   * **Outras Bibliotecas**: `lucide-react`, `sonner`, entre outras.
+
+-----
+
+### **Lógica para Tags de Status**
+
+A aplicação diferencia o status de uma pessoa de forma detalhada com base nos dados da API:
+
+  * **Localizada Viva**: A tag **verde** é exibida quando a pessoa tem uma data de localização e o campo `vivo` é `true`.
+  * **Localizada Morta**: A tag **vermelha** é exibida quando a pessoa tem uma data de localização e o campo `vivo` é `false`.
+  * **Desaparecida**: A tag **vermelha** é exibida quando a pessoa não tem uma data de localização.
 
 -----
 
@@ -79,7 +96,5 @@ Se você tiver o Docker instalado, pode construir e rodar a aplicação em um co
 
 ### **Meus Dados de Inscrição**
 
-  * [**Gustavo Oliveira de Moura**]
-  * [**gustavooliveiraworks@gmail.com**]
-
------
+  * **Gustavo Oliveira de Moura**
+  * **gustavooliveiraworks@gmail.com**
