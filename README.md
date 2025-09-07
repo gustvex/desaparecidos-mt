@@ -1,9 +1,3 @@
-Com base em todas as informações que você compartilhou sobre o projeto (os requisitos, seu `package.json` e o `Dockerfile`), preparei um modelo de `README.md` completo para você usar.
-
-Este `README.md` já inclui todas as seções importantes que um recrutador ou avaliador esperaria ver, detalhando o projeto, as tecnologias, e as instruções para execução.
-
------
-
 ### **`README.md`**
 
 # Projeto Prático: Pessoas Desaparecidas - Mato Grosso
