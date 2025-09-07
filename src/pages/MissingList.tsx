@@ -50,7 +50,7 @@ const MissingListContainer = () => {
         newParams.set("pagina", (page - 1).toString());
         setSearchParams(newParams);
     };
-    console.log(apiResponse?.content);
+
     return (
         <div className="flex flex-col">
             <MissingListManager
@@ -58,8 +58,8 @@ const MissingListContainer = () => {
                 loading={loading}
                 error={error}
                 totalRecords={apiResponse?.totalElements || 0}
-                currentPage={(apiResponse?.number ?? 0) }
-                totalPages={apiResponse?.totalPages || 1}
+                currentPage={(apiResponse?.number ?? 1) }
+                totalPages={(apiResponse?.totalPages ?? 0) - 1}
                 onPageChange={handlePageChange}
             />
 
