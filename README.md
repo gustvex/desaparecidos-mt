@@ -22,7 +22,7 @@ A aplicação consome a API oficial da Polícia Judiciária Civil de Mato Grosso
       * Formulário para o cidadão enviar observações, localização e fotos.
       * Campos com máscaras de entrada (ex: datas).
   * **Temas Personalizáveis**:
-      * Suporte para múltiplos temas (`light` `dark`e `sistem`), permitindo que o usuário altere a aparência da aplicação.
+      * Suporte para múltiplos temas (`light` `dark` e `sistem`), permitindo que o usuário altere a aparência da aplicação.
 
 -----
 
@@ -50,9 +50,28 @@ A aplicação diferencia o status de uma pessoa de forma detalhada com base nos 
 
 ### **Como Rodar o Projeto**
 
-Você pode executar a aplicação de duas formas: localmente (sem Docker) ou usando o Docker.
+Você pode executar a aplicação de duas formas: com Docker ou localmente (sem Docker).
 
-#### 1\. Executando Localmente
+#### 1\. Executando com Docker
+
+Se você tiver o **Docker** instalado, pode construir e rodar a aplicação em um contêiner, o que garante um ambiente isolado e padronizado.
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/gustvex/desaparecidos-mt.git
+    cd desaparecidos-mt
+    ```
+2.  **Construa a imagem do Docker:**
+    ```bash
+    docker build -t desaparecidos-mt .
+    ```
+3.  **Execute o contêiner:**
+    ```bash
+    docker run -p 8080:80 desaparecidos-mt
+    ```
+    A aplicação estará disponível em `http://localhost:8080`.
+
+#### 2\. Executando Localmente
 
 Certifique-se de ter o **Node.js** (versão 20 ou superior) e o **npm** instalados.
 
@@ -70,21 +89,6 @@ Certifique-se de ter o **Node.js** (versão 20 ou superior) e o **npm** instalad
     npm run start
     ```
     A aplicação estará disponível em `http://localhost:5173`.
-
-#### 2\. Executando com Docker
-
-Se você tiver o Docker instalado, pode construir e rodar a aplicação em um contêiner, o que garante um ambiente isolado e padronizado.
-
-1.  **Certifique-se de ter o `Dockerfile` e o `.dockerignore` na raiz do projeto.**
-2.  **Construa a imagem do Docker:**
-    ```bash
-    docker build -t desaparecidos-mt .
-    ```
-3.  **Execute o contêiner:**
-    ```bash
-    docker run -p 8080:80 desaparecidos-mt
-    ```
-    A aplicação estará disponível em `http://localhost:8080`.
 
 -----
 
