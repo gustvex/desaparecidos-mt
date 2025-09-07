@@ -22,7 +22,7 @@ A aplicação consome a API oficial da Polícia Judiciária Civil de Mato Grosso
       * Formulário para o cidadão enviar observações, localização e fotos.
       * Campos com máscaras de entrada (ex: datas).
   * **Temas Personalizáveis**:
-      * Suporte para múltiplos temas (`light` e `dark`), permitindo que o usuário altere a aparência da aplicação.
+      * Suporte para múltiplos temas (`light` `dark`e `sistem`), permitindo que o usuário altere a aparência da aplicação.
 
 -----
 
