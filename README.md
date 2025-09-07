@@ -1,9 +1,3 @@
-Com certeza. A documentação da lógica de status pode ficar mais concisa e direta.
-
-Aqui está a versão do `README.md` com a seção "Lógica para Tags de Status" simplificada, e a seção "Página de Detalhes" atualizada.
-
------
-
 ### **`README.md`**
 
 # Projeto Prático: Pessoas Desaparecidas - Mato Grosso
