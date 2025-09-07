@@ -15,7 +15,7 @@ A aplicação consome a API oficial da Polícia Judiciária Civil de Mato Grosso
   * **Tela Inicial**:
       * Exibição em cards de pessoas desaparecidas ou localizadas.
       * Paginação para exibir no mínimo 10 registros por página.
-      * Campo de busca para consulta de registros.
+      * Campo de busca para consulta de registros com os seguintes filtros: (`status` `sexo` `idade mínima` e `idade máxima`).
   * **Página de Detalhes**:
       * **Exibição de informações completas da pessoa, com destaque visual para os status `Localizada Viva`, `Localizada Morta` ou `Desaparecida`.**
   * **Envio de Informações Adicionais**:
