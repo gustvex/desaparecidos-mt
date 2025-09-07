@@ -1,21 +1,55 @@
------
+Com base em todas as informações que você compartilhou sobre o projeto (os requisitos, seu `package.json` e o `Dockerfile`), preparei um modelo de `README.md` completo para você usar.
 
-## Desaparecidos MT
-
-**Desaparecidos MT** é uma plataforma inovadora desenvolvida para auxiliar na busca por pessoas desaparecidas no estado de Mato Grosso. Utilizando tecnologia web, o projeto visa criar uma ponte entre a sociedade e as informações sobre casos de desaparecimento, facilitando o compartilhamento de dados e aumentando as chances de reencontro.
-
-### Funcionalidades
-
-  * **Listagem de Desaparecidos:** Uma galeria intuitiva onde é possível visualizar fotos, nomes e detalhes de pessoas desaparecidas.
-  * **Filtros de Busca:** Facilita a localização de informações específicas através de filtros como nome, cidade e data de desaparecimento.
-  * **Detalhes do Caso:** Ao clicar em um perfil, o usuário tem acesso a informações detalhadas, incluindo idade, características físicas e contatos para denúncias ou informações.
-  * **Contribuição da Comunidade:** A plataforma é construída para permitir a colaboração. Os usuários podem submeter informações relevantes, ajudando a manter os dados atualizados.
+Este `README.md` já inclui todas as seções importantes que um recrutador ou avaliador esperaria ver, detalhando o projeto, as tecnologias, e as instruções para execução.
 
 -----
 
-### Instalação e Uso
+### **`README.md`**
 
-Para começar a desenvolver, siga estes passos:
+# Projeto Prático: Pessoas Desaparecidas - Mato Grosso
+
+Este projeto é uma **Single Page Application (SPA)** desenvolvida como parte de um teste técnico para a Polícia Judiciária Civil de Mato Grosso. O objetivo é fornecer uma interface para que cidadãos possam consultar e enviar informações sobre pessoas desaparecidas ou localizadas.
+
+-----
+
+### **Visão Geral do Projeto**
+
+A aplicação consome a API oficial da Polícia Judiciária Civil de Mato Grosso para gerenciar registros de pessoas desaparecidas e localizadas. A interface foi projetada para ser intuitiva e responsiva, garantindo uma experiência de usuário consistente em diferentes dispositivos.
+
+### **Funcionalidades**
+
+  * **Tela Inicial**:
+      * Exibição em cards de pessoas desaparecidas ou localizadas.
+      * Paginação para exibir no mínimo 10 registros por página.
+      * Campo de busca para consulta de registros.
+  * **Página de Detalhes**:
+      * Exibição de informações completas da pessoa.
+      * Destaque visual para o status "Desaparecida" ou "Localizada".
+  * **Envio de Informações Adicionais**:
+      * Formulário para o cidadão enviar observações, localização e fotos.
+      * Campos com máscaras de entrada (ex: datas).
+
+-----
+
+### **Tecnologias Utilizadas**
+
+O projeto foi construído utilizando as seguintes ferramentas e bibliotecas:
+
+  * **Frontend**: `Vite` com `React` e `TypeScript`.
+  * **Estilização**: `Tailwind CSS`, com componentes `shadcn/ui` para agilidade no desenvolvimento.
+  * **Rotas**: `React Router Dom` para navegação.
+  * **Requisições API**: `axios`.
+  * **Outras Bibliotecas**: `lucide-react`, `sonner`, entre outras.
+
+-----
+
+### **Como Rodar o Projeto**
+
+Você pode executar a aplicação de duas formas: localmente (sem Docker) ou usando o Docker.
+
+#### 1\. Executando Localmente
+
+Certifique-se de ter o **Node.js** (versão 20 ou superior) e o **npm** instalados.
 
 1.  **Clone o repositório:**
     ```bash
@@ -28,36 +62,30 @@ Para começar a desenvolver, siga estes passos:
     ```
 3.  **Inicie o servidor de desenvolvimento:**
     ```bash
-    npm run dev
+    npm run start
     ```
+    A aplicação estará disponível em `http://localhost:5173`.
 
-O projeto será executado em `http://localhost:5173`.
+#### 2\. Executando com Docker
 
------
+Se você tiver o Docker instalado, pode construir e rodar a aplicação em um contêiner, o que garante um ambiente isolado e padronizado.
 
-### Scripts Disponíveis
-
-No diretório do projeto, você pode rodar os seguintes comandos:
-
-  * **`npm run dev`**: Inicia o servidor de desenvolvimento com *Hot Module Replacement* (HMR).
-  * **`npm run build`**: Compila o projeto para produção.
-  * **`npm run lint`**: Executa o linter para encontrar e corrigir problemas de código.
-  * **`npm run preview`**: Inicia um servidor local para visualizar a build de produção.
-
------
-
-### Plugins do Vite
-
-Este projeto utiliza o `@vitejs/plugin-react` para oferecer um desenvolvimento com **Fast Refresh**. Para uma alternativa com melhor desempenho, você pode considerar o uso do `@vitejs/plugin-react-swc`.
+1.  **Certifique-se de ter o `Dockerfile` e o `.dockerignore` na raiz do projeto.**
+2.  **Construa a imagem do Docker:**
+    ```bash
+    docker build -t desaparecidos-mt .
+    ```
+3.  **Execute o contêiner:**
+    ```bash
+    docker run -p 8080:80 desaparecidos-mt
+    ```
+    A aplicação estará disponível em `http://localhost:8080`.
 
 -----
 
-### Configuração do ESLint
+### **Meus Dados de Inscrição**
 
-Para garantir a qualidade do código, o projeto utiliza **ESLint** com regras específicas para **TypeScript** e **React**. Se você precisar de regras mais rigorosas ou específicas, pode expandir a configuração no arquivo `eslint.config.js`.
+  * [**Gustavo Oliveira de Moura**]
+  * [**gustavooliveiraworks@gmail.com**]
 
 -----
-
-### Como Contribuir
-
-Sua contribuição é muito bem-vinda\! Se você encontrar um bug, tiver uma sugestão de melhoria ou quiser adicionar novas funcionalidades, sinta-se à vontade para abrir uma **issue** ou um **pull request**.
