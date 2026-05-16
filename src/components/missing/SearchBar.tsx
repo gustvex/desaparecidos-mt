@@ -30,9 +30,9 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
 
     return (
         <div className="flex flex-col gap-4">
-            <h2 className="text-xl sm:text-3xl font-bold text-foreground">
+            <h3 className="text-lg sm:text-xl font-semibold text-foreground">
                 Consulte informações sobre pessoas desaparecidas ou já localizadas.
-            </h2>
+            </h3>
             <div className="flex flex-col sm:flex-row gap-4">
                 <Input
                     placeholder="Buscar por nome..."
@@ -41,10 +41,11 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     disabled={loading}
                 />
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 justify-center sm:justify-start">
                     <Button
                         onClick={() => setShowAdvanced(!showAdvanced)}
                         variant="outline"
+                        size="sm"
                         disabled={loading}
                     >
                         <Filter className="w-4 h-4 mr-2" />
@@ -54,6 +55,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     <Button
                         onClick={handleSearch}
                         disabled={loading}
+                        size="sm"
                         className="px-6"
                     >
                         <Search className="w-4 h-4 mr-2" />
@@ -64,7 +66,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
 
             <div className="flex justify-center">
                 {showAdvanced && (
-                    <Card>
+                    <Card className="w-full">
                         <CardContent className="flex flex-col gap-4">
                             <div className="flex flex-wrap gap-4">
                                 <div className="flex flex-col">

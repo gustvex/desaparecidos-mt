@@ -78,7 +78,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                     </div>
                 </div>
 
-                <Button asChild className="w-full font-bold mt-4">
+                <Button asChild size="sm" className="w-full font-bold mt-4">
                     <Link to={`/details/${person.id}`}>
                         <Eye className="w-4 h-4 mr-2" />
                         Ver Detalhes
