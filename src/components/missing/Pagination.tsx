@@ -60,7 +60,7 @@ const Pagination = ({
                 <Button
                     variant="outline"
                     onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage <= 1}
+                    disabled={loading || currentPage <= 1}
                 >
                     <ChevronLeft className="w-4 h-4 mr-1" />
                     Anterior
@@ -88,8 +88,8 @@ const Pagination = ({
                         <Button
                             key={page}
                             variant={page === currentPage ? "default" : "outline"}
-    
                             onClick={() => handlePageChange(page)}
+                            disabled={loading}
                             className={page === currentPage ? "font-semibold" : ""}
                         >
                             {page}
@@ -118,7 +118,7 @@ const Pagination = ({
                 <Button
                     variant="outline"
                     onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage >= totalPages}
+                    disabled={loading || currentPage >= totalPages}
                 >
                     Próxima
                     <ChevronRight className="w-4 h-4 ml-1" />

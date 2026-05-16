@@ -12,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="min-h-screen bg-background">
             <Toaster position="top-center" richColors />
             <Header />
-            <main className="px-4 py-8">
+            <main className="px-4 py-6 sm:py-8 max-w-screen-xl mx-auto w-full">
                 {children ? children : <Outlet />}
             </main>
 
