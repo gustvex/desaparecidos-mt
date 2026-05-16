@@ -7,37 +7,30 @@ const PageHeader = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const isHomePage = location.pathname === '/';
+
     return (
         <div className="top-0 w-full border-b">
-            <div className="container mx-auto p-4 flex items-center justify-between">
-                {!isHomePage &&
-                    <div className="flex gap-4">
+            <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    {!isHomePage && (
                         <Button
+                            size="sm"
+                            variant="outline"
                             onClick={() => navigate("/")}
-                            className="flex items-center"
+                            className="shrink-0"
                         >
-                            <ArrowLeft className="w-4 h-4 mr-2" />
-                            Voltar
+                            <ArrowLeft className="w-4 h-4" />
+                            <span className="hidden sm:inline ml-1">Voltar</span>
                         </Button>
+                    )}
 
-                        <div className="flex items-center gap-2 sm:gap-4">
-                            <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-                            <h1 className="text-xl sm:text-3xl font-bold text-foreground">
-                                Desaparecidos-MT
-                            </h1>
-                        </div>
-
+                    <div className="flex items-center gap-2 min-w-0">
+                        <Users className="w-5 h-5 sm:w-6 sm:h-6 text-primary shrink-0" />
+                        <h1 className="text-lg sm:text-2xl font-bold text-foreground truncate">
+                            Desaparecidos-MT
+                        </h1>
                     </div>
-                }
-
-                {isHomePage && <div className="flex items-center gap-2 sm:gap-4">
-                    <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-                    <h1 className="text-xl sm:text-3xl font-bold text-foreground">
-                        Desaparecidos-MT
-                    </h1>
-                </div>}
-
-
+                </div>
 
                 <ModeToggle />
             </div>
