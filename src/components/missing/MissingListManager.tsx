@@ -26,7 +26,7 @@ const MissingListManager = ({
     return (
         <div className="top-0 w-full bg-background">
             <div className="flex flex-col container mx-auto gap-4">
-          
+
                 <SearchBar onSearch={onSearch} loading={loading} />
 
                 <Pagination
@@ -38,7 +38,6 @@ const MissingListManager = ({
                     showFirstLast={totalPages > 7}
                     error={error}
                 />
-
 
                 {error && (
                     <Alert className="mb-8">
