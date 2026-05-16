@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import axios from "axios";
-import { fetchPessoaById, fetchPessoas, submitInformacao } from "./api";
+import { fetchPessoaById, fetchPessoas, PAGE_SIZE, submitInformacao } from "./api";
 
 vi.mock("axios");
 const mockedAxios = vi.mocked(axios, true);
@@ -18,7 +18,7 @@ describe("fetchPessoas", () => {
         const [, config] = mockedAxios.get.mock.calls[0];
         const params = config?.params as URLSearchParams;
         expect(params.get("pagina")).toBe("2");
-        expect(params.get("porPagina")).toBe("10");
+        expect(params.get("porPagina")).toBe(PAGE_SIZE.toString());
         expect(params.get("nome")).toBe("Ana");
         expect(params.get("sexo")).toBe("FEMININO");
         expect(params.get("faixaIdadeInicial")).toBe("20");

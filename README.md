@@ -64,14 +64,26 @@ npm run test:run
 ```
 src/
 ├── components/
-│   ├── missing/      # listagem e busca
+│   ├── missing/      # listagem, busca e paginação
 │   ├── details/      # página de detalhes
 │   ├── shared/       # StatusBadge, EmptyState, LoadingOverlay
 │   └── ui/           # shadcn/ui
-├── services/         # chamadas à API
+├── services/         # chamadas à API + PAGE_SIZE
 ├── types/            # interfaces TypeScript
 ├── lib/
-│   ├── hooks/        # useFetchData
-│   └── utils.ts      # formatDate, getFieldValue, calculateDaysMissing
+│   ├── queryClient.ts  # TanStack Query config (staleTime, gcTime, retry)
+│   └── utils.ts        # formatDate, getFieldValue, calculateDaysMissing, parseLocalDate
 └── pages/
 ```
+
+## Decisões de arquitetura
+
+Decisões relevantes estão documentadas como ADRs em [`docs/adr/`](docs/adr/):
+
+| ADR | Tópico |
+|---|---|
+| [001](docs/adr/001-tanstack-query-cache.md) | Cache client-side com TanStack Query + persistência em `localStorage` |
+| [002](docs/adr/002-typography-tokens.md) | Sistema de tokens tipográficos via Tailwind |
+| [003](docs/adr/003-timezone-safe-date-parsing.md) | Parsing manual de datas para evitar deslocamento de timezone |
+| [004](docs/adr/004-https-coercion-api-images.md) | Coerção HTTPS nas URLs de imagens da API |
+| [005](docs/adr/005-prefetch-pagination-bulk-cache.md) | Prefetch antecipado + aumento de página para reduzir espera percebida |

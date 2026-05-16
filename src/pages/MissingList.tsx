@@ -1,13 +1,14 @@
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { SearchFilters } from "@/types";
-import { fetchPessoas } from "@/services/api";
+import { fetchPessoas, PAGE_SIZE } from "@/services/api";
 import MissingListManager from "@/components/missing/MissingListManager";
 import PersonCard from "@/components/missing/PersonCard";
 import PersonCardSkeleton from "@/components/missing/PersonCardSkeleton";
 import EmptyState from "@/components/shared/EmptyState";
 
-const SKELETON_COUNT = 10;
+const PREFETCH_AHEAD = 2;
 
 const parseFilters = (searchParams: URLSearchParams): SearchFilters => {
     const filters: SearchFilters = {};
@@ -21,6 +22,7 @@ const parseFilters = (searchParams: URLSearchParams): SearchFilters => {
 
 const MissingList = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const queryClient = useQueryClient();
     const filters = parseFilters(searchParams);
     const apiPage = parseInt(searchParams.get("pagina") || "0");
 
@@ -28,6 +30,23 @@ const MissingList = () => {
         queryKey: ["pessoas", filters, apiPage],
         queryFn: () => fetchPessoas(filters, apiPage),
     });
+
+    const totalPages = data?.totalPages ?? 0;
+    const filtersKey = JSON.stringify(filters);
+
+    useEffect(() => {
+        if (!data || isError) return;
+
+        for (let offset = 1; offset <= PREFETCH_AHEAD; offset++) {
+            const nextPage = apiPage + offset;
+            if (nextPage >= totalPages) break;
+
+            queryClient.prefetchQuery({
+                queryKey: ["pessoas", filters, nextPage],
+                queryFn: () => fetchPessoas(filters, nextPage),
+            });
+        }
+    }, [data, isError, apiPage, totalPages, filtersKey, queryClient, filters]);
 
     const handleSearch = (newFilters: SearchFilters) => {
         const newParams = new URLSearchParams();
@@ -46,7 +65,6 @@ const MissingList = () => {
     };
 
     const totalRecords = data?.totalElements ?? 0;
-    const totalPages = data?.totalPages ?? 0;
     const currentPage = apiPage + 1;
     const hasResults = (data?.content?.length ?? 0) > 0;
 
@@ -65,7 +83,7 @@ const MissingList = () => {
             <main className="flex justify-center mt-4">
                 {isLoading && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-2 md:px-4">
-                        {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+                        {Array.from({ length: PAGE_SIZE }).map((_, i) => (
                             <PersonCardSkeleton key={i} />
                         ))}
                     </div>
