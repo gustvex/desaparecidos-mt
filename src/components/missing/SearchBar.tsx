@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { SearchFilters } from "@/assets/interfaces";
 
 type FilterValue = string | number | undefined;
+
 interface SearchBarProps {
     onSearch: (filters: SearchFilters) => void;
     loading?: boolean;
@@ -16,9 +17,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
     const [filters, setFilters] = useState<SearchFilters>({});
     const [showAdvanced, setShowAdvanced] = useState(false);
 
-    const handleSearch = () => {
-        onSearch(filters);
-    };
+    const handleSearch = () => onSearch(filters);
 
     const handleClear = () => {
         setFilters({});
@@ -39,13 +38,14 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     placeholder="Buscar por nome..."
                     value={filters.nome || ""}
                     onChange={(e) => updateFilter("nome", e.target.value)}
-                    className="input-police"
+                    disabled={loading}
                 />
 
                 <div className="flex gap-2">
                     <Button
                         onClick={() => setShowAdvanced(!showAdvanced)}
                         variant="outline"
+                        disabled={loading}
                     >
                         <Filter className="w-4 h-4 mr-2" />
                         Filtros
@@ -54,11 +54,10 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     <Button
                         onClick={handleSearch}
                         disabled={loading}
-                        className="  px-6"
-
+                        className="px-6"
                     >
                         <Search className="w-4 h-4 mr-2" />
-                        Buscar
+                        {loading ? "Buscando..." : "Buscar"}
                     </Button>
                 </div>
             </div>
@@ -69,12 +68,11 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                         <CardContent className="flex flex-col gap-4">
                             <div className="flex flex-wrap gap-4">
                                 <div className="flex flex-col">
-                                    <label className="text-sm font-medium text-foreground mb-2 block">
-                                        Status
-                                    </label>
+                                    <label className="text-sm font-medium text-foreground mb-2 block">Status</label>
                                     <Select
                                         value={filters.status || "TODOS"}
                                         onValueChange={(value) => updateFilter("status", value === "TODOS" ? undefined : value)}
+                                        disabled={loading}
                                     >
                                         <SelectTrigger className="w-[185px]">
                                             <SelectValue placeholder="Todos" />
@@ -88,12 +86,12 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                                 </div>
 
                                 <div>
-                                    <label className="text-sm font-medium text-foreground mb-2 block">
-                                        Sexo
-                                    </label>
+                                    <label className="text-sm font-medium text-foreground mb-2 block">Sexo</label>
                                     <Select
                                         value={filters.sexo || "TODOS"}
-                                        onValueChange={(value) => updateFilter("sexo", value === "TODOS" ? undefined : value)}>
+                                        onValueChange={(value) => updateFilter("sexo", value === "TODOS" ? undefined : value)}
+                                        disabled={loading}
+                                    >
                                         <SelectTrigger className="w-[185px]">
                                             <SelectValue placeholder="Todos" />
                                         </SelectTrigger>
@@ -106,37 +104,30 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                                 </div>
 
                                 <div>
-                                    <label className="text-sm font-medium text-foreground mb-2 block">
-                                        Idade Mínima
-                                    </label>
+                                    <label className="text-sm font-medium text-foreground mb-2 block">Idade Mínima</label>
                                     <Input
                                         type="number"
                                         placeholder="Ex: 18"
                                         value={filters.faixaIdadeInicial || ""}
                                         onChange={(e) => updateFilter("faixaIdadeInicial", e.target.value ? parseInt(e.target.value) : undefined)}
-                                        className="input-police"
+                                        disabled={loading}
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="text-sm font-medium text-foreground mb-2 block">
-                                        Idade Máxima
-                                    </label>
+                                    <label className="text-sm font-medium text-foreground mb-2 block">Idade Máxima</label>
                                     <Input
                                         type="number"
                                         placeholder="Ex: 65"
                                         value={filters.faixaIdadeFinal || ""}
                                         onChange={(e) => updateFilter("faixaIdadeFinal", e.target.value ? parseInt(e.target.value) : undefined)}
-                                        className="input-police"
+                                        disabled={loading}
                                     />
                                 </div>
                             </div>
 
                             <div className="flex justify-end">
-                                <Button
-                                    onClick={handleClear}
-                                    variant="outline"
-                                >
+                                <Button onClick={handleClear} variant="outline" disabled={loading}>
                                     <X className="w-4 h-4 mr-2" />
                                     Limpar
                                 </Button>
@@ -145,7 +136,6 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     </Card>
                 )}
             </div>
-
         </div>
     );
 };

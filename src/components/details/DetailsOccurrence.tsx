@@ -1,14 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Eye, FileText, Info } from "lucide-react";
-import type { PessoaDesaparecidaDTO } from "@/assets/interfaces";
+import type { PessoaDesaparecidaDTO } from "@/types";
 import { Separator } from "../ui/separator";
+import { toTitleCase } from "@/lib/utils";
 
 interface Props {
     person: PessoaDesaparecidaDTO;
 }
 
 const DetailsOccurrence = ({ person }: Props) => {
-
     return (
         <Card>
             <CardHeader>
@@ -25,7 +25,7 @@ const DetailsOccurrence = ({ person }: Props) => {
                     </h4>
                     <div className="bg-muted/50 rounded-lg p-4">
                         <p className="text-foreground leading-relaxed whitespace-pre-wrap">
-                            {person.ultimaOcorrencia.ocorrenciaEntrevDesapDTO?.informacao || "Nenhum informação disponível"}
+                            {toTitleCase(person.ultimaOcorrencia.ocorrenciaEntrevDesapDTO?.informacao) || "Nenhuma informação disponível"}
                         </p>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ const DetailsOccurrence = ({ person }: Props) => {
                     </h4>
                     <div className="bg-muted/50 rounded-lg p-4">
                         <p className="text-foreground">
-                            {person?.ultimaOcorrencia?.ocorrenciaEntrevDesapDTO?.vestimentasDesaparecido || "Nenhum informação disponível"}
+                            {toTitleCase(person.ultimaOcorrencia?.ocorrenciaEntrevDesapDTO?.vestimentasDesaparecido) || "Nenhuma informação disponível"}
                         </p>
                     </div>
                 </div>

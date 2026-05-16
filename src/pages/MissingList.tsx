@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import type { ApiResponse, SearchFilters } from "@/assets/interfaces";
-import { fetchPessoas } from "@/assets/api";
+import type { ApiResponse, SearchFilters } from "@/types";
+import { fetchPessoas } from "@/services/api";
 import MissingListManager from "@/components/missing/MissingListManager";
-import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import PersonCard from "@/components/missing/PersonCard";
-import { Users } from "lucide-react";
+import PersonCardSkeleton from "@/components/missing/PersonCardSkeleton";
 import { useFetchData } from "@/lib/hooks/useFetchData";
+import EmptyState from "@/components/shared/EmptyState";
+
+const SKELETON_COUNT = 10;
 
 const MissingListContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -58,17 +60,20 @@ const MissingListContainer = () => {
                 loading={loading}
                 error={error}
                 totalRecords={apiResponse?.totalElements || 0}
-                currentPage={(apiResponse?.number ?? 1) }
+                currentPage={(apiResponse?.number ?? 1)}
                 totalPages={(apiResponse?.totalPages ?? 0) - 1}
                 onPageChange={handlePageChange}
             />
 
-            <main className="flex justify-center">
+            <main className="flex justify-center mt-4">
                 {loading && (
-                    <div className="fixed inset-0 flex items-center justify-center">
-                        <Spinner variant="default" size={32} />
+                    <div className="flex flex-wrap justify-center">
+                        {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+                            <PersonCardSkeleton key={i} />
+                        ))}
                     </div>
                 )}
+
                 {!loading && !error && (apiResponse?.content?.length || 0) > 0 && (
                     <div className="flex flex-wrap justify-center">
                         {apiResponse?.content.map((person) => (
@@ -76,16 +81,9 @@ const MissingListContainer = () => {
                         ))}
                     </div>
                 )}
+
                 {!loading && error && (
-                    <div className="flex flex-col text-center py-12">
-                        <Users className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-                        <h3 className="text-lg font-semibold text-foreground mb-2">
-                            Nenhuma pessoa encontrada
-                        </h3>
-                        <p className="text-muted-foreground">
-                            Tente ajustar os filtros de busca ou consulte novamente mais tarde.
-                        </p>
-                    </div>
+                    <EmptyState description="Tente ajustar os filtros de busca ou consulte novamente mais tarde." />
                 )}
             </main>
         </div>

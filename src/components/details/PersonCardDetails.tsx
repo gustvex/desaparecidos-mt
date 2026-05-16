@@ -1,59 +1,36 @@
 import { Calendar, Clock, Heart, MapPin, User, VenusAndMars } from "lucide-react";
+import PersonPhoto from "@/components/shared/PersonPhoto";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import { formatDate, getFieldValue } from "@/lib/utils";
-import { Badge } from "../ui/badge";
-import type { PessoaDesaparecidaDTO } from "@/assets/interfaces";
+import { formatDate, getFieldValue, toTitleCase } from "@/lib/utils";
+import type { PessoaDesaparecidaDTO } from "@/types";
+import StatusBadge from "@/components/shared/StatusBadge";
 
 interface Props {
     person: PessoaDesaparecidaDTO;
-    daysMissing: number | null
+    daysMissing: number | null;
 }
 
 const CardPerson = ({ person, daysMissing }: Props) => {
-    
-   const getStatusBadge = () => {
-          if (person.ultimaOcorrencia?.dataLocalizacao) {
-              if (person.vivo) {
-                  return <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold text-md">Localizada Viva</Badge>;
-              }
-              return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Localizada Morta</Badge>;
-          }
-          return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Desaparecida</Badge>;
-    };
-    
     return (
         <Card className="flex">
             <CardHeader className="pb-4">
                 <div className="flex flex-col justify-center  items-center sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div className="space-y-2">
-                        <CardTitle className="text-3xl font-bold text-foreground">
-                            {getFieldValue(person.nome, "Nome não informado")}
+                        <CardTitle className="text-xl sm:text-3xl font-bold text-foreground">
+                            {toTitleCase(person.nome) || "Nome não informado"}
                         </CardTitle>
                         <p className="text-muted-foreground text-sm">
                             <strong>ID da Ocorrência:</strong> #{person.ultimaOcorrencia?.ocoId || person.id}
                         </p>
                     </div>
-                    {getStatusBadge()}
+                    <StatusBadge vivo={person.vivo} ultimaOcorrencia={person.ultimaOcorrencia} />
                 </div>
             </CardHeader>
             <CardContent>
                 <div className="flex justify-center  items-center flex-col lg:flex-row gap-8">
                     <div className="flex-shrink-0">
-                        <div className="w-80 h-80 bg-muted rounded-lg flex items-center justify-center overflow-hidden border-2 border-border">
-                            {person.urlFoto ? (
-                                <img
-                                    src={person.urlFoto}
-                                    alt={`Foto de ${person.nome}`}
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : (
-                                <div className="text-center">
-                                    <User className="w-16 h-16 text-muted-foreground mx-auto mb-2" />
-                                    <p className="text-sm text-muted-foreground">
-                                        Foto não disponível
-                                    </p>
-                                </div>
-                            )}
+                        <div className="w-full max-w-xs sm:w-80 h-64 sm:h-80 overflow-hidden border-2 border-border rounded-lg">
+                            <PersonPhoto urlFoto={person.urlFoto} nome={person.nome} />
                         </div>
                     </div>
                     <div className="flex-1 space-y-6">
@@ -68,7 +45,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
                                         <div>
                                             <span className="text-sm font-bold text-foreground">Nome Completo:</span>
                                             <p className="text-sm">
-                                                {getFieldValue(person.nome, "Não informado")}
+                                                {toTitleCase(person.nome) || "Não informado"}
                                             </p>
                                         </div>
                                     </div>
@@ -86,7 +63,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
                                         <div>
                                             <span className="text-sm font-bold text-foreground">Sexo:</span>
                                             <p className="text-sm">
-                                                {getFieldValue(person.sexo, "Não informado")}
+                                                {toTitleCase(person.sexo) || "Não informado"}
                                             </p>
                                         </div>
                                     </div>
@@ -117,7 +94,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
                                         <div>
                                             <span className="text-sm font-bold text-foreground">Local do Desaparecimento:</span>
                                             <p className="text-sm">
-                                                {getFieldValue(person.ultimaOcorrencia?.localDesaparecimentoConcat, "Não informado")}
+                                                {toTitleCase(person.ultimaOcorrencia?.localDesaparecimentoConcat) || "Não informado"}
                                             </p>
                                         </div>
                                     </div>
