@@ -7,8 +7,8 @@ import FormMissing from "@/components/details/FormMissing";
 import DetailsOccurrence from "@/components/details/DetailsOccurrence";
 import Emergency from "@/components/details/Emergency";
 import Posters from "@/components/details/Posters";
+import PersonDetailsSkeleton from "@/components/details/PersonDetailsSkeleton";
 import { useFetchData } from "@/lib/hooks/useFetchData";
-import LoadingOverlay from "@/components/shared/LoadingOverlay";
 import EmptyState from "@/components/shared/EmptyState";
 import { calculateDaysMissing } from "@/lib/utils";
 
@@ -31,7 +31,7 @@ const MissingDetails = () => {
 
     return (
         <div className="flex flex-col">
-            {loading && <LoadingOverlay />}
+            {loading && <PersonDetailsSkeleton />}
 
             {!loading && !error && person && (
                 <div className="container mx-auto grid grid-cols-1 xl:grid-cols-4 gap-6">
