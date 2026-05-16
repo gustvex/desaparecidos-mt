@@ -3,46 +3,39 @@ import type { ApiResponse, InformacaoPayload, InformacaoResponse, PessoaDesapare
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+const PAGE_SIZE = 10;
+
 export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Promise<ApiResponse> => {
-    try {
-        const params = new URLSearchParams();
+    const params = new URLSearchParams();
+    params.append("pagina", pagina.toString());
+    params.append("porPagina", PAGE_SIZE.toString());
 
-        params.append('pagina', pagina.toString());
-        params.append('porPagina', '10');
+    if (filters.nome) params.append("nome", filters.nome);
+    if (filters.status) params.append("status", filters.status);
+    if (filters.sexo) params.append("sexo", filters.sexo);
+    if (filters.faixaIdadeInicial) params.append("faixaIdadeInicial", filters.faixaIdadeInicial.toString());
+    if (filters.faixaIdadeFinal) params.append("faixaIdadeFinal", filters.faixaIdadeFinal.toString());
 
-        if (filters.nome) params.append('nome', filters.nome);
-        if (filters.status) params.append('status', filters.status);
-        if (filters.sexo) params.append('sexo', filters.sexo);
-        if (filters.faixaIdadeInicial) params.append('faixaIdadeInicial', filters.faixaIdadeInicial.toString());
-        if (filters.faixaIdadeFinal) params.append('faixaIdadeFinal', filters.faixaIdadeFinal.toString());
-
-        const response = await axios.get<ApiResponse>(`${API_BASE_URL}/pessoas/aberto/filtro`, { params });
-        return response.data;
-    } catch (error) {
-        console.error("Falha ao buscar pessoas:", error);
-        throw error;
-    }
+    const response = await axios.get<ApiResponse>(`${API_BASE_URL}/pessoas/aberto/filtro`, { params });
+    return response.data;
 };
 
 export const fetchPessoaById = async (id: number): Promise<PessoaDesaparecidaDTO> => {
-    if (typeof id !== 'number' || id <= 0) {
+    if (!Number.isInteger(id) || id <= 0) {
         throw new Error("O ID deve ser um número inteiro positivo.");
     }
 
     try {
         const response = await axios.get<PessoaDesaparecidaDTO>(`${API_BASE_URL}/pessoas/${id}`);
         return response.data;
-    } catch (error: unknown) {
-        let errorMsg = 'Ocorreu um erro ao buscar os detalhes da pessoa.';
-        if (axios.isAxiosError(error) && error.response) {
-            if (error.response.status === 404) {
-                errorMsg = `Não foi encontrada pessoa com o ID: ${id}.`;
-            } else {
-                errorMsg = `Erro na API: ${error.response.status} - ${error.response.statusText}`;
-            }
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+            throw new Error(`Não foi encontrada pessoa com o ID: ${id}.`);
         }
-        console.error("Falha ao buscar detalhes da pessoa:", error);
-        throw new Error(errorMsg);
+        if (axios.isAxiosError(error) && error.response) {
+            throw new Error(`Erro na API: ${error.response.status} - ${error.response.statusText}`);
+        }
+        throw new Error("Ocorreu um erro ao buscar os detalhes da pessoa.");
     }
 };
 
@@ -53,13 +46,9 @@ export const submitInformacao = async (payload: InformacaoPayload): Promise<Info
     formData.append("ocoId", ocorrenciaId.toString());
     formData.append("informacao", informacao);
     formData.append("descricao", descricao);
+    formData.append("data", data);
 
-    const formattedDate = typeof data === "string" ? data : data.toISOString().split("T")[0];
-    formData.append("data", formattedDate);
-
-    if (files && files.length > 0) {
-        files.forEach((file) => formData.append("files", file));
-    }
+    files?.forEach((file) => formData.append("files", file));
 
     try {
         const response = await axios.post<InformacaoResponse>(
@@ -68,12 +57,10 @@ export const submitInformacao = async (payload: InformacaoPayload): Promise<Info
             { headers: { "Content-Type": "multipart/form-data" } }
         );
         return response.data;
-    } catch (error: unknown) {
-        let errorMsg = "Falha ao enviar as informações. Tente novamente.";
+    } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
-            errorMsg = `Erro ao enviar informação: ${error.response.status} - ${error.response.statusText}`;
+            throw new Error(`Erro ao enviar informação: ${error.response.status} - ${error.response.statusText}`);
         }
-        console.error("Falha ao enviar as informações:", error);
-        throw new Error(errorMsg);
+        throw new Error("Falha ao enviar as informações. Tente novamente.");
     }
 };

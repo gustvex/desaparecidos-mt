@@ -1,26 +1,39 @@
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { Send } from 'lucide-react';
 import { submitInformacao } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Send } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from "sonner"
 
 interface FormMissingProps {
     ocoId: number | undefined;
 }
 
 const FormMissing = ({ ocoId }: FormMissingProps) => {
-
     const [informacao, setInformacao] = useState('');
     const [descricao, setDescricao] = useState('');
     const [data, setData] = useState('');
     const [files, setFiles] = useState<File[]>([]);
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    const { mutate, isPending } = useMutation({
+        mutationFn: submitInformacao,
+        onSuccess: () => {
+            toast.success('Informação enviada com sucesso!');
+            setInformacao('');
+            setDescricao('');
+            setData('');
+            setFiles([]);
+        },
+        onError: () => {
+            toast.error('Falha ao enviar a informação. Tente novamente.');
+        },
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!ocoId || !informacao || !data || !descricao) {
@@ -28,27 +41,13 @@ const FormMissing = ({ ocoId }: FormMissingProps) => {
             return;
         }
 
-        setIsSubmitting(true);
-        try {
-            const payload = {
-                ocorrenciaId: Number(ocoId),
-                informacao,
-                descricao,
-                data: new Date(data),
-                files,
-                
-            };
-
-            await submitInformacao(payload);
-
-            toast.success('Informação enviada com sucesso!');
-
-        } catch (error) {
-            console.error(error);
-            toast.error('Falha ao enviar a informação. Tente novamente.');
-        } finally {
-            setIsSubmitting(false);
-        }
+        mutate({
+            ocorrenciaId: Number(ocoId),
+            informacao,
+            descricao,
+            data,
+            files,
+        });
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,15 +114,15 @@ const FormMissing = ({ ocoId }: FormMissingProps) => {
                     </div>
 
                     <div className='flex gap-4'>
-                        <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? 'Enviando...' : 'Enviar Informações'}
+                        <Button type="submit" disabled={isPending}>
+                            {isPending ? 'Enviando...' : 'Enviar Informações'}
                             <Send className="w-4 h-4 mr-2 mt-1" />
                         </Button>
                     </div>
                 </form>
-
             </CardContent>
         </Card>
     );
-}
+};
+
 export default FormMissing;

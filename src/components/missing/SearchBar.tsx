@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Filter, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import type { SearchFilters } from "@/assets/interfaces";
+import type { SearchFilters } from "@/types";
 
 type FilterValue = string | number | undefined;
 
@@ -38,6 +38,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     placeholder="Buscar por nome..."
                     value={filters.nome || ""}
                     onChange={(e) => updateFilter("nome", e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     disabled={loading}
                 />
 

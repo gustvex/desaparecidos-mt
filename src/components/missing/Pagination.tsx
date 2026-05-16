@@ -49,16 +49,20 @@ const Pagination = ({
     if (totalPages <= 1) return null;
 
     return (
-        <div className="flex flex-col items-center gap-2">
-            {/* linha 1: números */}
+        <nav aria-label="Paginação" className="flex flex-col items-center gap-2">
             <div className="flex items-center justify-center gap-1 flex-wrap">
                 {showStartEllipsis && (
                     <>
-                        <Button variant="outline" className={PAGE_BTN} onClick={() => handlePageChange(1)}>
+                        <Button
+                            variant="outline"
+                            className={PAGE_BTN}
+                            onClick={() => handlePageChange(1)}
+                            aria-label="Ir para página 1"
+                        >
                             1
                         </Button>
                         {visiblePages[0] > 2 && (
-                            <span className="w-9 h-9 flex items-center justify-center text-muted-foreground">
+                            <span aria-hidden="true" className="w-9 h-9 flex items-center justify-center text-muted-foreground">
                                 <MoreHorizontal className="w-4 h-4" />
                             </span>
                         )}
@@ -72,6 +76,8 @@ const Pagination = ({
                         className={PAGE_BTN}
                         onClick={() => handlePageChange(page)}
                         disabled={loading}
+                        aria-label={`Ir para página ${page}`}
+                        aria-current={page === currentPage ? "page" : undefined}
                     >
                         {page}
                     </Button>
@@ -80,18 +86,22 @@ const Pagination = ({
                 {showEndEllipsis && (
                     <>
                         {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
-                            <span className="w-9 h-9 flex items-center justify-center text-muted-foreground">
+                            <span aria-hidden="true" className="w-9 h-9 flex items-center justify-center text-muted-foreground">
                                 <MoreHorizontal className="w-4 h-4" />
                             </span>
                         )}
-                        <Button variant="outline" className={PAGE_BTN} onClick={() => handlePageChange(totalPages)}>
+                        <Button
+                            variant="outline"
+                            className={PAGE_BTN}
+                            onClick={() => handlePageChange(totalPages)}
+                            aria-label={`Ir para página ${totalPages}`}
+                        >
                             {totalPages}
                         </Button>
                     </>
                 )}
             </div>
 
-            {/* linha 2: anterior / próxima */}
             <div className="flex items-center gap-2">
                 <Button
                     variant="outline"
@@ -99,6 +109,7 @@ const Pagination = ({
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={loading || currentPage <= 1}
                     className="gap-1 px-3"
+                    aria-label="Página anterior"
                 >
                     <ChevronLeft className="w-4 h-4" />
                     Anterior
@@ -109,6 +120,7 @@ const Pagination = ({
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={loading || currentPage >= totalPages}
                     className="gap-1 px-3"
+                    aria-label="Próxima página"
                 >
                     Próxima
                     <ChevronRight className="w-4 h-4" />
@@ -116,11 +128,11 @@ const Pagination = ({
             </div>
 
             {!loading && !error && totalRecords > 0 && (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground" aria-live="polite">
                     Página {currentPage} de {totalPages} — {totalRecords} registros
                 </p>
             )}
-        </div>
+        </nav>
     );
 };
 
