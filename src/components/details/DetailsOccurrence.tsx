@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Eye, FileText, Info } from "lucide-react";
-import type { PessoaDesaparecidaDTO } from "@/assets/interfaces";
+import type { PessoaDesaparecidaDTO } from "@/types";
 import { Separator } from "../ui/separator";
 
 interface Props {

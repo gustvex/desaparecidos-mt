@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import type { UltimaOcorrenciaDTO } from "@/assets/interfaces";
+import type { UltimaOcorrenciaDTO } from "@/types";
 
 interface StatusBadgeProps {
     vivo: boolean;

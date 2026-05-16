@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { ApiResponse, InformacaoPayload, InformacaoResponse, PessoaDesaparecidaDTO, SearchFilters } from "./interfaces";
+import type { ApiResponse, InformacaoPayload, InformacaoResponse, PessoaDesaparecidaDTO, SearchFilters } from "@/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -26,14 +26,11 @@ export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Pro
 
 export const fetchPessoaById = async (id: number): Promise<PessoaDesaparecidaDTO> => {
     if (typeof id !== 'number' || id <= 0) {
-        const errorMsg = "O ID deve ser um número inteiro positivo.";
-        throw new Error(errorMsg);
+        throw new Error("O ID deve ser um número inteiro positivo.");
     }
 
-    const url = `${API_BASE_URL}/pessoas/${id}`;
-
     try {
-        const response = await axios.get<PessoaDesaparecidaDTO>(url);
+        const response = await axios.get<PessoaDesaparecidaDTO>(`${API_BASE_URL}/pessoas/${id}`);
         return response.data;
     } catch (error: unknown) {
         let errorMsg = 'Ocorreu um erro ao buscar os detalhes da pessoa.';
@@ -49,36 +46,27 @@ export const fetchPessoaById = async (id: number): Promise<PessoaDesaparecidaDTO
     }
 };
 
-export const submitInformacao = async (
-    payload: InformacaoPayload
-): Promise<InformacaoResponse> => {
+export const submitInformacao = async (payload: InformacaoPayload): Promise<InformacaoResponse> => {
     const { ocorrenciaId, informacao, descricao, data, files } = payload;
-    const url = `${API_BASE_URL}/ocorrencias/informacoes-desaparecido`;
 
     const formData = new FormData();
     formData.append("ocoId", ocorrenciaId.toString());
     formData.append("informacao", informacao);
     formData.append("descricao", descricao);
-    
-    const formattedDate =
-        typeof data === "string"
-            ? data
-            : data.toISOString().split("T")[0];
 
+    const formattedDate = typeof data === "string" ? data : data.toISOString().split("T")[0];
     formData.append("data", formattedDate);
 
     if (files && files.length > 0) {
-        files.forEach((file) => {
-            formData.append("files", file);
-        });
+        files.forEach((file) => formData.append("files", file));
     }
 
     try {
-        const response = await axios.post<InformacaoResponse>(url, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+        const response = await axios.post<InformacaoResponse>(
+            `${API_BASE_URL}/ocorrencias/informacoes-desaparecido`,
+            formData,
+            { headers: { "Content-Type": "multipart/form-data" } }
+        );
         return response.data;
     } catch (error: unknown) {
         let errorMsg = "Falha ao enviar as informações. Tente novamente.";
