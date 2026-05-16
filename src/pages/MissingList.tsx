@@ -4,9 +4,11 @@ import type { ApiResponse, SearchFilters } from "@/types";
 import { fetchPessoas } from "@/services/api";
 import MissingListManager from "@/components/missing/MissingListManager";
 import PersonCard from "@/components/missing/PersonCard";
+import PersonCardSkeleton from "@/components/missing/PersonCardSkeleton";
 import { useFetchData } from "@/lib/hooks/useFetchData";
-import LoadingOverlay from "@/components/shared/LoadingOverlay";
 import EmptyState from "@/components/shared/EmptyState";
+
+const SKELETON_COUNT = 10;
 
 const MissingListContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -63,8 +65,14 @@ const MissingListContainer = () => {
                 onPageChange={handlePageChange}
             />
 
-            <main className="flex justify-center">
-                {loading && <LoadingOverlay />}
+            <main className="flex justify-center mt-4">
+                {loading && (
+                    <div className="flex flex-wrap justify-center">
+                        {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+                            <PersonCardSkeleton key={i} />
+                        ))}
+                    </div>
+                )}
 
                 {!loading && !error && (apiResponse?.content?.length || 0) > 0 && (
                     <div className="flex flex-wrap justify-center">
