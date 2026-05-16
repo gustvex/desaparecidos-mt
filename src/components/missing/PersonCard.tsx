@@ -2,9 +2,9 @@ import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, User, Eye, VenusAndMars } from "lucide-react";
+import { Calendar, MapPin, User, Eye, VenusAndMars } from "lucide-react";
 import { Link } from "react-router-dom";
-import type { PessoaDesaparecidaDTO } from '@/assets/interfaces';
+import type { PessoaDesaparecidaDTO } from '@/types';
 import { formatDate, toTitleCase } from '@/lib/utils';
 import PersonPhoto from '@/components/shared/PersonPhoto';
 
@@ -32,13 +32,13 @@ const InfoRow = ({ icon, label, value }: InfoRowProps) => (
     <div className="flex items-center gap-2 text-sm min-w-0">
         <span className="flex-shrink-0 text-muted-foreground">{icon}</span>
         <span className="font-bold text-foreground flex-shrink-0">{label}</span>
-        <span className=" text-muted-foreground" title={value}>{value}</span>
+        <span className="truncate min-w-0 text-muted-foreground" title={value}>{value}</span>
     </div>
 );
 
 const PersonCard: React.FC<CardProps> = ({ person }) => {
     return (
-        <Card className="flex flex-col items-center md:flex-row p-4 m-2 w-full sm:w-auto md:m-4 md:h-[268px]">
+        <Card className="flex flex-col items-center md:flex-row p-4 w-full md:h-[268px]">
             <div className="w-[200px] h-[236px] flex-shrink-0">
                 <PersonPhoto urlFoto={person.urlFoto} nome={person.nome} />
             </div>
@@ -66,6 +66,11 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                         icon={<Calendar className="w-4 h-4" />}
                         label="Desde:"
                         value={formatDate(person.ultimaOcorrencia?.dtDesaparecimento)}
+                    />
+                    <InfoRow
+                        icon={<MapPin className="w-4 h-4" />}
+                        label="Local:"
+                        value={toTitleCase(person.ultimaOcorrencia?.localDesaparecimentoConcat) || "Não informado"}
                     />
 
                     <div className="mt-1">

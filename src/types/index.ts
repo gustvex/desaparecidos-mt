@@ -1,4 +1,3 @@
-
 export interface PessoaDesaparecidaDTO {
     id: number;
     nome: string;
@@ -58,7 +57,7 @@ export interface InformacaoPayload {
     ocorrenciaId: number;
     informacao: string;
     descricao: string;
-    data: Date;
+    data: string;
     files?: File[];
 }
 
