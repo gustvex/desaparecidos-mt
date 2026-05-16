@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, User, Eye, VenusAndMars } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import type { PessoaDesaparecidaDTO } from '@/assets/interfaces';
 import { formatDate, toTitleCase } from '@/lib/utils';
 import PersonPhoto from '@/components/shared/PersonPhoto';
@@ -37,8 +37,6 @@ const InfoRow = ({ icon, label, value }: InfoRowProps) => (
 );
 
 const PersonCard: React.FC<CardProps> = ({ person }) => {
-    const navigate = useNavigate();
-
     return (
         <Card className="flex flex-col items-center md:flex-row p-4 m-2 w-full sm:w-auto md:m-4 md:h-[268px]">
             <div className="w-[200px] h-[236px] flex-shrink-0">
@@ -80,12 +78,11 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                     </div>
                 </div>
 
-                <Button
-                    onClick={() => navigate(`/details/${person.id}`)}
-                    className="w-full font-bold mt-4"
-                >
-                    <Eye className="w-4 h-4 mr-2" />
-                    Ver Detalhes
+                <Button asChild className="w-full font-bold mt-4">
+                    <Link to={`/details/${person.id}`}>
+                        <Eye className="w-4 h-4 mr-2" />
+                        Ver Detalhes
+                    </Link>
                 </Button>
             </CardContent>
         </Card>
