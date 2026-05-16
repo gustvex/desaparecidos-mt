@@ -1,4 +1,5 @@
 import { Calendar, Clock, Heart, MapPin, User, VenusAndMars } from "lucide-react";
+import PersonPhoto from "@/components/shared/PersonPhoto";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { formatDate, getFieldValue } from "@/lib/utils";
 import type { PessoaDesaparecidaDTO } from "@/types";
@@ -28,21 +29,8 @@ const CardPerson = ({ person, daysMissing }: Props) => {
             <CardContent>
                 <div className="flex justify-center  items-center flex-col lg:flex-row gap-8">
                     <div className="flex-shrink-0">
-                        <div className="w-full max-w-xs sm:w-80 h-64 sm:h-80 bg-muted rounded-lg flex items-center justify-center overflow-hidden border-2 border-border">
-                            {person.urlFoto ? (
-                                <img
-                                    src={person.urlFoto.replace(/^http:\/\//i, 'https://')}
-                                    alt={`Foto de ${person.nome}`}
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : (
-                                <div className="text-center">
-                                    <User className="w-16 h-16 text-muted-foreground mx-auto mb-2" />
-                                    <p className="text-sm text-muted-foreground">
-                                        Foto não disponível
-                                    </p>
-                                </div>
-                            )}
+                        <div className="w-full max-w-xs sm:w-80 h-64 sm:h-80 overflow-hidden border-2 border-border rounded-lg">
+                            <PersonPhoto urlFoto={person.urlFoto} nome={person.nome} />
                         </div>
                     </div>
                     <div className="flex-1 space-y-6">

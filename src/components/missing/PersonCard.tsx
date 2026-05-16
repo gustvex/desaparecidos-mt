@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, MapPin, User, Eye, VenusAndMars } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { PessoaDesaparecidaDTO } from '@/assets/interfaces';
-import { formatDate, getFieldValue, toSecureUrl } from '@/lib/utils';
+import { formatDate, getFieldValue } from '@/lib/utils';
+import PersonPhoto from '@/components/shared/PersonPhoto';
 
 interface CardProps {
     person: PessoaDesaparecidaDTO;
@@ -23,31 +23,12 @@ const getStatusBadge = (person: PessoaDesaparecidaDTO) => {
 };
 
 const PersonCard: React.FC<CardProps> = ({ person }) => {
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const [imageError, setImageError] = useState(false);
     const navigate = useNavigate();
-    const secureUrl = toSecureUrl(person.urlFoto);
-    const showImage = secureUrl && !imageError;
 
     return (
         <Card className="flex flex-col justify-center items-center md:flex-row p-4 m-2 w-full sm:w-auto md:m-4">
-            <div className="w-[200px] h-[236px] flex-shrink-0 relative">
-                {showImage ? (
-                    <>
-                        {!imageLoaded && <Skeleton className="absolute inset-0 rounded-md" />}
-                        <img
-                            src={secureUrl}
-                            alt={`Foto de ${getFieldValue(person.nome, "Pessoa desconhecida")}`}
-                            className={`w-full h-full object-cover rounded-md transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                            onLoad={() => setImageLoaded(true)}
-                            onError={() => setImageError(true)}
-                        />
-                    </>
-                ) : (
-                    <div className="flex items-center justify-center w-full h-full bg-muted rounded-md">
-                        <User className="w-1/2 h-1/2 text-muted-foreground" />
-                    </div>
-                )}
+            <div className="w-[200px] h-[236px] flex-shrink-0">
+                <PersonPhoto urlFoto={person.urlFoto} nome={person.nome} />
             </div>
             <CardContent className="w-full md:w-[250px] flex-grow-1 p-0 pl-0 pt-4 md:pl-4 md:pt-0">
                 <div className="flex flex-col h-full justify-between">
