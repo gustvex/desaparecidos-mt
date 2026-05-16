@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, User, Eye, VenusAndMars } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { PessoaDesaparecidaDTO } from '@/assets/interfaces';
-import { formatDate, getFieldValue } from '@/lib/utils';
+import { formatDate, getFieldValue, toTitleCase } from '@/lib/utils';
 import PersonPhoto from '@/components/shared/PersonPhoto';
 
 interface CardProps {
@@ -35,9 +35,9 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                     <div className="flex flex-col gap-1">
                         <h3
                             className="text-lg font-semibold text-foreground truncate"
-                            title={getFieldValue(person.nome, "Nome não informado")}
+                            title={toTitleCase(person.nome) || "Nome não informado"}
                         >
-                            {getFieldValue(person.nome, "Nome não informado")}
+                            {toTitleCase(person.nome) || "Nome não informado"}
                         </h3>
 
                         <div className="flex items-center space-x-2 text-lg text-muted-foreground">
@@ -52,7 +52,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                             <VenusAndMars className="w-4 h-4" />
                             <span className="text-foreground font-bold">Sexo:</span>
                             <span className="truncate">
-                                {getFieldValue(person.sexo, "Não informado")}
+                                {toTitleCase(person.sexo) || "Não informado"}
                             </span>
                         </div>
 
@@ -68,7 +68,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                             <MapPin className="w-4 h-4" />
                             <span className="text-foreground font-bold">Local:</span>
                             <span className="truncate">
-                                {getFieldValue(person.ultimaOcorrencia?.localDesaparecimentoConcat, "Não informado")}
+                                {toTitleCase(person.ultimaOcorrencia?.localDesaparecimentoConcat) || "Não informado"}
                             </span>
                         </div>
 

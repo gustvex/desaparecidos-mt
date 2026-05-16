@@ -30,6 +30,17 @@ export const getFieldValue = (value: string | undefined | null, defaultValue: st
   return value;
 };
 
+const LOWERCASE_WORDS = new Set(["de", "da", "do", "das", "dos", "e", "a", "o", "em", "no", "na"]);
+
+export const toTitleCase = (text?: string | null): string => {
+  if (!text?.trim()) return "";
+  return text
+    .toLowerCase()
+    .split(" ")
+    .map((word, i) => (i === 0 || !LOWERCASE_WORDS.has(word)) ? word.replace(/^\w/, c => c.toUpperCase()) : word)
+    .join(" ");
+};
+
 export const toSecureUrl = (url?: string): string | undefined => {
   if (!url) return undefined;
   return url.replace(/^http:\/\//i, "https://");

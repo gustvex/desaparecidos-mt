@@ -1,7 +1,7 @@
 import { Calendar, Clock, Heart, MapPin, User, VenusAndMars } from "lucide-react";
 import PersonPhoto from "@/components/shared/PersonPhoto";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import { formatDate, getFieldValue } from "@/lib/utils";
+import { formatDate, getFieldValue, toTitleCase } from "@/lib/utils";
 import type { PessoaDesaparecidaDTO } from "@/types";
 import StatusBadge from "@/components/shared/StatusBadge";
 
@@ -17,7 +17,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
                 <div className="flex flex-col justify-center  items-center sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div className="space-y-2">
                         <CardTitle className="text-xl sm:text-3xl font-bold text-foreground">
-                            {getFieldValue(person.nome, "Nome não informado")}
+                            {toTitleCase(person.nome) || "Nome não informado"}
                         </CardTitle>
                         <p className="text-muted-foreground text-sm">
                             <strong>ID da Ocorrência:</strong> #{person.ultimaOcorrencia?.ocoId || person.id}
@@ -45,7 +45,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
                                         <div>
                                             <span className="text-sm font-bold text-foreground">Nome Completo:</span>
                                             <p className="text-sm">
-                                                {getFieldValue(person.nome, "Não informado")}
+                                                {toTitleCase(person.nome) || "Não informado"}
                                             </p>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
                                         <div>
                                             <span className="text-sm font-bold text-foreground">Sexo:</span>
                                             <p className="text-sm">
-                                                {getFieldValue(person.sexo, "Não informado")}
+                                                {toTitleCase(person.sexo) || "Não informado"}
                                             </p>
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
                                         <div>
                                             <span className="text-sm font-bold text-foreground">Local do Desaparecimento:</span>
                                             <p className="text-sm">
-                                                {getFieldValue(person.ultimaOcorrencia?.localDesaparecimentoConcat, "Não informado")}
+                                                {toTitleCase(person.ultimaOcorrencia?.localDesaparecimentoConcat) || "Não informado"}
                                             </p>
                                         </div>
                                     </div>
