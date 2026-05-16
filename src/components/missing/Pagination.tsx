@@ -33,15 +33,12 @@ const Pagination = ({
         if (totalPages <= maxVisiblePages) {
             return Array.from({ length: totalPages }, (_, i) => i + 1);
         }
-
         const half = Math.floor(maxVisiblePages / 2);
         let start = Math.max(1, currentPage - half);
         const end = Math.min(totalPages, start + maxVisiblePages - 1);
-
         if (end - start + 1 < maxVisiblePages) {
             start = Math.max(1, end - maxVisiblePages + 1);
         }
-
         return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     };
 
@@ -52,30 +49,20 @@ const Pagination = ({
     if (totalPages <= 1) return null;
 
     return (
-        <div className="flex flex-col items-center gap-3">
+        <nav aria-label="Paginação" className="flex flex-col items-center gap-2">
             <div className="flex items-center justify-center gap-1 flex-wrap">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={loading || currentPage <= 1}
-                    className="gap-1 px-3"
-                >
-                    <ChevronLeft className="w-4 h-4" />
-                    Anterior
-                </Button>
-
                 {showStartEllipsis && (
                     <>
                         <Button
                             variant="outline"
                             className={PAGE_BTN}
                             onClick={() => handlePageChange(1)}
+                            aria-label="Ir para página 1"
                         >
                             1
                         </Button>
                         {visiblePages[0] > 2 && (
-                            <span className="w-9 h-9 flex items-center justify-center text-muted-foreground">
+                            <span aria-hidden="true" className="w-9 h-9 flex items-center justify-center text-muted-foreground">
                                 <MoreHorizontal className="w-4 h-4" />
                             </span>
                         )}
@@ -89,6 +76,8 @@ const Pagination = ({
                         className={PAGE_BTN}
                         onClick={() => handlePageChange(page)}
                         disabled={loading}
+                        aria-label={`Ir para página ${page}`}
+                        aria-current={page === currentPage ? "page" : undefined}
                     >
                         {page}
                     </Button>
@@ -97,7 +86,7 @@ const Pagination = ({
                 {showEndEllipsis && (
                     <>
                         {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
-                            <span className="w-9 h-9 flex items-center justify-center text-muted-foreground">
+                            <span aria-hidden="true" className="w-9 h-9 flex items-center justify-center text-muted-foreground">
                                 <MoreHorizontal className="w-4 h-4" />
                             </span>
                         )}
@@ -105,18 +94,33 @@ const Pagination = ({
                             variant="outline"
                             className={PAGE_BTN}
                             onClick={() => handlePageChange(totalPages)}
+                            aria-label={`Ir para página ${totalPages}`}
                         >
                             {totalPages}
                         </Button>
                     </>
                 )}
+            </div>
 
+            <div className="flex items-center gap-2">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={loading || currentPage <= 1}
+                    className="gap-1 px-3"
+                    aria-label="Página anterior"
+                >
+                    <ChevronLeft className="w-4 h-4" />
+                    Anterior
+                </Button>
                 <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={loading || currentPage >= totalPages}
                     className="gap-1 px-3"
+                    aria-label="Próxima página"
                 >
                     Próxima
                     <ChevronRight className="w-4 h-4" />
@@ -124,11 +128,11 @@ const Pagination = ({
             </div>
 
             {!loading && !error && totalRecords > 0 && (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground" aria-live="polite">
                     Página {currentPage} de {totalPages} — {totalRecords} registros
                 </p>
             )}
-        </div>
+        </nav>
     );
 };
 

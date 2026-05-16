@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Filter, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import type { SearchFilters } from "@/assets/interfaces";
+import type { SearchFilters } from "@/types";
 
 type FilterValue = string | number | undefined;
 
@@ -30,7 +30,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
 
     return (
         <div className="flex flex-col gap-4">
-            <h3 className="text-lg sm:text-xl font-semibold text-foreground">
+            <h3 className="text-lg sm:text-2xl font-bold text-foreground">
                 Consulte informações sobre pessoas desaparecidas ou já localizadas.
             </h3>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -38,6 +38,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
                     placeholder="Buscar por nome..."
                     value={filters.nome || ""}
                     onChange={(e) => updateFilter("nome", e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     disabled={loading}
                 />
 

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import StatusBadge from "./StatusBadge";
-import type { UltimaOcorrenciaDTO } from "@/assets/interfaces";
+import type { UltimaOcorrenciaDTO } from "@/types";
 
 const ocorrenciaDesaparecida: UltimaOcorrenciaDTO = {
     dtDesaparecimento: "2024-01-01",

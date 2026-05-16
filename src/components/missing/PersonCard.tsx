@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, User, Eye, VenusAndMars } from "lucide-react";
 import { Link } from "react-router-dom";
-import type { PessoaDesaparecidaDTO } from '@/assets/interfaces';
+import type { PessoaDesaparecidaDTO } from '@/types';
 import { formatDate, toTitleCase } from '@/lib/utils';
 import PersonPhoto from '@/components/shared/PersonPhoto';
 
@@ -29,7 +29,7 @@ interface InfoRowProps {
 }
 
 const InfoRow = ({ icon, label, value }: InfoRowProps) => (
-    <div className="flex items-center gap-2 text-sm">
+    <div className="flex items-center gap-2 text-sm min-w-0">
         <span className="flex-shrink-0 text-muted-foreground">{icon}</span>
         <span className="font-bold text-foreground flex-shrink-0">{label}</span>
         <span className="truncate min-w-0 text-muted-foreground" title={value}>{value}</span>
@@ -38,12 +38,12 @@ const InfoRow = ({ icon, label, value }: InfoRowProps) => (
 
 const PersonCard: React.FC<CardProps> = ({ person }) => {
     return (
-        <Card className="flex flex-col items-center md:flex-row p-4 m-2 w-full sm:w-auto md:m-4 md:h-[268px]">
+        <Card className="flex flex-col items-center md:flex-row p-4 w-full md:h-[268px]">
             <div className="w-[200px] h-[236px] flex-shrink-0">
                 <PersonPhoto urlFoto={person.urlFoto} nome={person.nome} />
             </div>
 
-            <CardContent className="w-full md:w-[250px] p-0 pl-0 pt-4 md:pl-4 md:pt-0 flex flex-col justify-between h-[236px]">
+            <CardContent className="w-full md:w-[250px] min-w-0 p-0 pl-0 pt-4 md:pl-4 md:pt-0 flex flex-col justify-between h-[236px]">
                 <div className="flex flex-col gap-2 min-w-0">
                     <h3
                         className="text-sm font-semibold text-foreground truncate"
