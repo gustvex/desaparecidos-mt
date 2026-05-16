@@ -30,6 +30,11 @@ export const getFieldValue = (value: string | undefined | null, defaultValue: st
   return value;
 };
 
+export const toSecureUrl = (url?: string): string | undefined => {
+  if (!url) return undefined;
+  return url.replace(/^http:\/\//i, "https://");
+};
+
 export const calculateDaysMissing = (dtDesaparecimento?: string): number | null => {
   if (!dtDesaparecimento) return null;
   const disappearanceDate = new Date(dtDesaparecimento);
