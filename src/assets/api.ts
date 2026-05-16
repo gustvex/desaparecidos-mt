@@ -1,6 +1,8 @@
 import axios from "axios";
 import type { ApiResponse, InformacaoPayload, InformacaoResponse, PessoaDesaparecidaDTO, SearchFilters } from "./interfaces";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Promise<ApiResponse> => {
     try {
         const params = new URLSearchParams();
@@ -14,7 +16,7 @@ export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Pro
         if (filters.faixaIdadeInicial) params.append('faixaIdadeInicial', filters.faixaIdadeInicial.toString());
         if (filters.faixaIdadeFinal) params.append('faixaIdadeFinal', filters.faixaIdadeFinal.toString());
 
-        const response = await axios.get<ApiResponse>(`https://abitus-api.geia.vip/v1/pessoas/aberto/filtro`, { params });
+        const response = await axios.get<ApiResponse>(`${API_BASE_URL}/pessoas/aberto/filtro`, { params });
         return response.data;
     } catch (error) {
         console.error("Falha ao buscar pessoas:", error);
@@ -28,7 +30,7 @@ export const fetchPessoaById = async (id: number): Promise<PessoaDesaparecidaDTO
         throw new Error(errorMsg);
     }
 
-    const url = `https://abitus-api.geia.vip/v1/pessoas/${id}`;
+    const url = `${API_BASE_URL}/pessoas/${id}`;
 
     try {
         const response = await axios.get<PessoaDesaparecidaDTO>(url);
@@ -51,7 +53,7 @@ export const submitInformacao = async (
     payload: InformacaoPayload
 ): Promise<InformacaoResponse> => {
     const { ocorrenciaId, informacao, descricao, data, files } = payload;
-    const url = "https://abitus-api.geia.vip/v1/ocorrencias/informacoes-desaparecido";
+    const url = `${API_BASE_URL}/ocorrencias/informacoes-desaparecido`;
 
     const formData = new FormData();
     formData.append("ocoId", ocorrenciaId.toString());
