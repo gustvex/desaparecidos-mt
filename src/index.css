@@ -8,6 +8,23 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --font-size-display: var(--fs-display);
+  --font-size-heading-1: var(--fs-heading-1);
+  --font-size-heading-2: var(--fs-heading-2);
+  --font-size-heading-3: var(--fs-heading-3);
+  --font-size-body-lg: var(--fs-body-lg);
+  --font-size-body: var(--fs-body);
+  --font-size-label: var(--fs-label);
+  --font-size-small: var(--fs-small);
+  --font-size-caption: var(--fs-caption);
+  --font-weight-regular: var(--fw-regular);
+  --font-weight-medium: var(--fw-medium);
+  --font-weight-semibold: var(--fw-semibold);
+  --font-weight-bold: var(--fw-bold);
+  --line-height-tight: var(--lh-tight);
+  --line-height-snug: var(--lh-snug);
+  --line-height-normal: var(--lh-normal);
+  --line-height-relaxed: var(--lh-relaxed);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -43,6 +60,23 @@
 
 :root {
   --radius: 0.65rem;
+  --fs-display: 2.25rem;
+  --fs-heading-1: 1.875rem;
+  --fs-heading-2: 1.5rem;
+  --fs-heading-3: 1.25rem;
+  --fs-body-lg: 1rem;
+  --fs-body: 0.875rem;
+  --fs-label: 0.875rem;
+  --fs-small: 0.75rem;
+  --fs-caption: 0.625rem;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --lh-tight: 1.25;
+  --lh-snug: 1.375;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.625;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
