@@ -98,7 +98,7 @@ const FormMissing = ({ ocoId }: FormMissingProps) => {
                                 multiple
                                 onChange={handleFileChange}
                             />
-                            <p className="text-xs text-muted-foreground mt-1">Anexe fotos da pessoa ou do local. (Opcional)</p>
+                            <p className="text-sm text-muted-foreground mt-1">Anexe fotos da pessoa ou do local. (Opcional)</p>
                         </div>
                     </div>
 

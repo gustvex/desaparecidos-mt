@@ -24,9 +24,8 @@ const MissingListManager = ({
     totalPages
 }: MissingListManagerProps) => {
     return (
-        <div className="top-0 w-full bg-background">
+        <div className="w-full bg-background">
             <div className="flex flex-col container mx-auto gap-4">
-
                 <SearchBar onSearch={onSearch} loading={loading} />
 
                 <Pagination
@@ -35,19 +34,17 @@ const MissingListManager = ({
                     currentPage={currentPage}
                     totalRecords={totalRecords}
                     totalPages={totalPages}
-                    showFirstLast={totalPages > 7}
                     error={error}
                 />
 
                 {error && (
-                    <Alert className="mb-8">
+                    <Alert>
                         <AlertCircle className="h-4 w-4" />
                         <AlertDescription>
-                            Erro ao carregar dados: {error}. Tente novamente mais tarde.
+                            Erro ao carregar dados. Tente novamente mais tarde.
                         </AlertDescription>
                     </Alert>
                 )}
-
             </div>
         </div>
     );
