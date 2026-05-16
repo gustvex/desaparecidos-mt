@@ -3,7 +3,7 @@ import type { ApiResponse, InformacaoPayload, InformacaoResponse, PessoaDesapare
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const PAGE_SIZE = 10;
+export const PAGE_SIZE = 20;
 
 export const fetchPessoas = async (filters: SearchFilters = {}, pagina = 0): Promise<ApiResponse> => {
     const params = new URLSearchParams();

@@ -30,7 +30,7 @@ TanStack Query v5 com `@tanstack/query-sync-storage-persister` salvando o cache 
 new QueryClient({
     defaultOptions: {
         queries: {
-            staleTime: 10 * 60 * 1000,   // 10 minutos — sem nenhuma request durante esse período
+            staleTime: 30 * 60 * 1000,   // 30 minutos — sem nenhuma request durante esse período (ver ADR 005)
             gcTime:    24 * 60 * 60 * 1000, // 24 horas — entrada permanece no cache mesmo sem uso
             retry: 2,
             refetchOnWindowFocus: false,  // API lenta: evita request desnecessária ao trocar aba
@@ -41,7 +41,7 @@ new QueryClient({
 
 **Por que `refetchOnWindowFocus: false`?** O padrão do React Query é revalidar sempre que a janela ganha foco. Com uma API que demora minutos, isso geraria requests custosas sem benefício perceptível.
 
-**Por que `staleTime` de 10 minutos?** Dados de pessoas desaparecidas são atualizados com baixa frequência. 10 minutos é tempo suficiente para múltiplas navegações dentro da mesma sessão sem nenhuma request.
+**Por que `staleTime` de 30 minutos?** Dados de pessoas desaparecidas são atualizados com baixa frequência. 30 minutos é tempo suficiente para múltiplas navegações dentro da mesma sessão sem nenhuma request — o valor foi ajustado de 10 para 30 min na ADR 005 após análise de uso real.
 
 ### Persistência (`src/App.tsx`)
 
