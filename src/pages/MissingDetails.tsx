@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import type { PessoaDesaparecidaDTO } from "@/types";
 import { fetchPessoaById } from "@/services/api";
 import CardPerson from "@/components/details/PersonCardDetails";
@@ -7,33 +7,27 @@ import FormMissing from "@/components/details/FormMissing";
 import DetailsOccurrence from "@/components/details/DetailsOccurrence";
 import Emergency from "@/components/details/Emergency";
 import Posters from "@/components/details/Posters";
-import { useFetchData } from "@/lib/hooks/useFetchData";
 import LoadingOverlay from "@/components/shared/LoadingOverlay";
 import EmptyState from "@/components/shared/EmptyState";
 import { calculateDaysMissing } from "@/lib/utils";
 
 const MissingDetails = () => {
     const { id } = useParams<{ id: string }>();
+    const personId = id ? parseInt(id, 10) : null;
 
-    const {
-        data: person,
-        loading,
-        error,
-        fetchData
-    } = useFetchData<PessoaDesaparecidaDTO, [number]>(fetchPessoaById, parseInt(id!, 10));
-
-    useEffect(() => {
-        if (!id || isNaN(parseInt(id, 10))) return;
-        fetchData(parseInt(id, 10));
-    }, [id, fetchData]);
+    const { data: person, isLoading, isError } = useQuery<PessoaDesaparecidaDTO>({
+        queryKey: ['pessoa', personId],
+        queryFn: () => fetchPessoaById(personId!),
+        enabled: !!personId && !isNaN(personId),
+    });
 
     const daysMissing = calculateDaysMissing(person?.ultimaOcorrencia?.dtDesaparecimento);
 
     return (
         <div className="flex flex-col">
-            {loading && <LoadingOverlay />}
+            {isLoading && <LoadingOverlay />}
 
-            {!loading && !error && person && (
+            {!isLoading && !isError && person && (
                 <div className="container mx-auto grid grid-cols-1 xl:grid-cols-4 gap-6">
                     <div className="xl:col-span-3 space-y-8">
                         <CardPerson person={person} daysMissing={daysMissing} />
@@ -48,7 +42,7 @@ const MissingDetails = () => {
                 </div>
             )}
 
-            {!loading && error && !person && (
+            {!isLoading && isError && !person && (
                 <EmptyState description="Não foi possível carregar os dados. Tente novamente mais tarde." />
             )}
         </div>

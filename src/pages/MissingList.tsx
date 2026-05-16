@@ -1,39 +1,33 @@
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import type { ApiResponse, SearchFilters } from "@/types";
 import { fetchPessoas } from "@/services/api";
 import MissingListManager from "@/components/missing/MissingListManager";
 import PersonCard from "@/components/missing/PersonCard";
-import { useFetchData } from "@/lib/hooks/useFetchData";
 import LoadingOverlay from "@/components/shared/LoadingOverlay";
 import EmptyState from "@/components/shared/EmptyState";
 
 const MissingListContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [filters, setFilters] = useState<SearchFilters>({});
 
-    const {
-        data: apiResponse,
-        loading,
-        error,
-        fetchData
-    } = useFetchData<ApiResponse, [SearchFilters, number]>(fetchPessoas, filters, currentPage);
+    const pagina = parseInt(searchParams.get("pagina") || "0");
 
-    useEffect(() => {
-        const urlFilters: SearchFilters = {};
-        const pagina = parseInt(searchParams.get("pagina") || "0");
+    const filters = useMemo<SearchFilters>(() => {
+        const f: SearchFilters = {};
+        if (searchParams.get("nome")) f.nome = searchParams.get("nome")!;
+        if (searchParams.get("status")) f.status = searchParams.get("status") as SearchFilters['status'];
+        if (searchParams.get("sexo")) f.sexo = searchParams.get("sexo") as SearchFilters['sexo'];
+        if (searchParams.get("faixaIdadeInicial")) f.faixaIdadeInicial = parseInt(searchParams.get("faixaIdadeInicial")!);
+        if (searchParams.get("faixaIdadeFinal")) f.faixaIdadeFinal = parseInt(searchParams.get("faixaIdadeFinal")!);
+        return f;
+    }, [searchParams]);
 
-        if (searchParams.get("nome")) urlFilters.nome = searchParams.get("nome")!;
-        if (searchParams.get("status")) urlFilters.status = searchParams.get("status") as SearchFilters['status'];
-        if (searchParams.get("sexo")) urlFilters.sexo = searchParams.get("sexo") as SearchFilters['sexo'];
-        if (searchParams.get("faixaIdadeInicial")) urlFilters.faixaIdadeInicial = parseInt(searchParams.get("faixaIdadeInicial")!);
-        if (searchParams.get("faixaIdadeFinal")) urlFilters.faixaIdadeFinal = parseInt(searchParams.get("faixaIdadeFinal")!);
-
-        setCurrentPage(pagina + 1);
-        setFilters(urlFilters);
-        fetchData(urlFilters, pagina + 1);
-    }, [searchParams, fetchData]);
+    const { data: apiResponse, isLoading, isError } = useQuery<ApiResponse>({
+        queryKey: ['pessoas', filters, pagina],
+        queryFn: () => fetchPessoas(filters, pagina + 1),
+        placeholderData: keepPreviousData,
+    });
 
     const handleSearch = (newFilters: SearchFilters) => {
         const newParams = new URLSearchParams();
@@ -55,8 +49,8 @@ const MissingListContainer = () => {
         <div className="flex flex-col">
             <MissingListManager
                 onSearch={handleSearch}
-                loading={loading}
-                error={error}
+                loading={isLoading}
+                error={isError ? "Erro ao carregar dados" : null}
                 totalRecords={apiResponse?.totalElements || 0}
                 currentPage={(apiResponse?.number ?? 1)}
                 totalPages={(apiResponse?.totalPages ?? 0) - 1}
@@ -64,9 +58,9 @@ const MissingListContainer = () => {
             />
 
             <main className="flex justify-center">
-                {loading && <LoadingOverlay />}
+                {isLoading && <LoadingOverlay />}
 
-                {!loading && !error && (apiResponse?.content?.length || 0) > 0 && (
+                {!isLoading && !isError && (apiResponse?.content?.length || 0) > 0 && (
                     <div className="flex flex-wrap justify-center">
                         {apiResponse?.content.map((person) => (
                             <PersonCard key={person.id} person={person} />
@@ -74,7 +68,7 @@ const MissingListContainer = () => {
                     </div>
                 )}
 
-                {!loading && error && (
+                {!isLoading && isError && (
                     <EmptyState description="Tente ajustar os filtros de busca ou consulte novamente mais tarde." />
                 )}
             </main>
