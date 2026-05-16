@@ -57,7 +57,7 @@ const FormMissing = ({ ocoId }: FormMissingProps) => {
     };
 
     return (
-        <Card className='border border-none shadow-none p-0'>
+        <Card>
             <CardHeader>
                 <CardTitle className="text-xl text-primary">Adicionar Novas Informações</CardTitle>
             </CardHeader>

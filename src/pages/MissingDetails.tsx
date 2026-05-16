@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPessoaById } from "@/services/api";
@@ -20,6 +21,10 @@ const MissingDetails = () => {
         queryFn: () => fetchPessoaById(personId),
         enabled,
     });
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+    }, [personId]);
 
     const daysMissing = calculateDaysMissing(person?.ultimaOcorrencia?.dtDesaparecimento);
 
