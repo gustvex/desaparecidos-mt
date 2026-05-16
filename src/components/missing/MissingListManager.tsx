@@ -1,8 +1,8 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import SearchBar from "./SearchBar";
-import Pagination from "./Pagination.";
-import type { SearchFilters } from "@/types";
+import Pagination from "./Pagination";
+import type { SearchFilters } from "@/assets/interfaces";
 
 interface MissingListManagerProps {
     onSearch: (filters: SearchFilters) => void;
