@@ -1,4 +1,4 @@
-import type { PessoaDesaparecidaDTO } from "@/assets/interfaces";
+import type { PessoaDesaparecidaDTO } from "@/types";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Download, FileText } from "lucide-react";

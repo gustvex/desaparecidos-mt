@@ -21,3 +21,11 @@ export const getFieldValue = (value: string | undefined | null, defaultValue: st
   }
   return value;
 };
+
+export const calculateDaysMissing = (dtDesaparecimento?: string): number | null => {
+  if (!dtDesaparecimento) return null;
+  const disappearanceDate = new Date(dtDesaparecimento);
+  const today = new Date();
+  const diffMs = Math.abs(today.getTime() - disappearanceDate.getTime());
+  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+};

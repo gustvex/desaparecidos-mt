@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, User, Eye, VenusAndMars } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import type { PessoaDesaparecidaDTO } from '@/assets/interfaces';
+import type { PessoaDesaparecidaDTO } from '@/types';
 import { formatDate, getFieldValue } from '@/lib/utils';
+import StatusBadge from '@/components/shared/StatusBadge';
 
 interface CardProps {
     person: PessoaDesaparecidaDTO;
@@ -14,16 +14,6 @@ interface CardProps {
 const PersonCard: React.FC<CardProps> = ({ person }) => {
     const [imageError, setImageError] = useState(false);
     const navigate = useNavigate();
-
-    const getStatusBadge = () => {
-        if (person.ultimaOcorrencia?.dataLocalizacao) {
-            if (person.vivo) {
-                return <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold text-md">Localizada Viva</Badge>;
-            }
-            return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Localizada Morta</Badge>;
-        }
-        return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Desaparecida</Badge>;
-    };
 
     return (
         <Card className="flex flex-col justify-center items-center md:flex-row  p-4 m-4">
@@ -84,7 +74,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
                         </div>
 
                         <div className="mt-2">
-                            {getStatusBadge()}
+                            <StatusBadge vivo={person.vivo} ultimaOcorrencia={person.ultimaOcorrencia} />
                         </div>
                     </div>
 

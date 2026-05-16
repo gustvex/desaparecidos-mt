@@ -1,26 +1,15 @@
 import { Calendar, Clock, Heart, MapPin, User, VenusAndMars } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { formatDate, getFieldValue } from "@/lib/utils";
-import { Badge } from "../ui/badge";
-import type { PessoaDesaparecidaDTO } from "@/assets/interfaces";
+import type { PessoaDesaparecidaDTO } from "@/types";
+import StatusBadge from "@/components/shared/StatusBadge";
 
 interface Props {
     person: PessoaDesaparecidaDTO;
-    daysMissing: number | null
+    daysMissing: number | null;
 }
 
 const CardPerson = ({ person, daysMissing }: Props) => {
-    
-   const getStatusBadge = () => {
-          if (person.ultimaOcorrencia?.dataLocalizacao) {
-              if (person.vivo) {
-                  return <Badge className="bg-green-600 hover:bg-green-700 text-white font-bold text-md">Localizada Viva</Badge>;
-              }
-              return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Localizada Morta</Badge>;
-          }
-          return <Badge className="bg-red-600 hover:bg-red-700 text-white font-bold text-md">Desaparecida</Badge>;
-    };
-    
     return (
         <Card className="flex">
             <CardHeader className="pb-4">
@@ -33,7 +22,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
                             <strong>ID da Ocorrência:</strong> #{person.ultimaOcorrencia?.ocoId || person.id}
                         </p>
                     </div>
-                    {getStatusBadge()}
+                    <StatusBadge vivo={person.vivo} ultimaOcorrencia={person.ultimaOcorrencia} />
                 </div>
             </CardHeader>
             <CardContent>

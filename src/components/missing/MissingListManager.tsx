@@ -1,12 +1,11 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import SearchBar from "./SearchBar";
-// import PageHeader from "./PageHeader";
 import Pagination from "./Pagination.";
-
+import type { SearchFilters } from "@/types";
 
 interface MissingListManagerProps {
-    onSearch: (filters: { nome?: string }) => void;
+    onSearch: (filters: SearchFilters) => void;
     onPageChange: (page: number) => void;
     loading: boolean;
     error: string | null;
@@ -27,7 +26,7 @@ const MissingListManager = ({
     return (
         <div className="top-0 w-full bg-background">
             <div className="flex flex-col container mx-auto gap-4">
-          
+
                 <SearchBar onSearch={onSearch} loading={loading} />
 
                 <Pagination
@@ -39,7 +38,6 @@ const MissingListManager = ({
                     showFirstLast={totalPages > 7}
                     error={error}
                 />
-
 
                 {error && (
                     <Alert className="mb-8">
