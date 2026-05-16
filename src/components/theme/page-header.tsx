@@ -20,9 +20,9 @@ const PageHeader = () => {
                             Voltar
                         </Button>
 
-                        <div className="flex items-center gap-4">
-                            <Users className="w-8 h-8 text-primary" />
-                            <h1 className="text-3xl font-bold text-foreground">
+                        <div className="flex items-center gap-2 sm:gap-4">
+                            <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+                            <h1 className="text-xl sm:text-3xl font-bold text-foreground">
                                 Desaparecidos-MT
                             </h1>
                         </div>
@@ -30,9 +30,9 @@ const PageHeader = () => {
                     </div>
                 }
 
-                {isHomePage && <div className="flex items-center gap-4">
-                    <Users className="w-8 h-8 text-primary" />
-                    <h1 className="text-3xl font-bold text-foreground">
+                {isHomePage && <div className="flex items-center gap-2 sm:gap-4">
+                    <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+                    <h1 className="text-xl sm:text-3xl font-bold text-foreground">
                         Desaparecidos-MT
                     </h1>
                 </div>}

@@ -15,7 +15,7 @@ const CardPerson = ({ person, daysMissing }: Props) => {
             <CardHeader className="pb-4">
                 <div className="flex flex-col justify-center  items-center sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div className="space-y-2">
-                        <CardTitle className="text-3xl font-bold text-foreground">
+                        <CardTitle className="text-xl sm:text-3xl font-bold text-foreground">
                             {getFieldValue(person.nome, "Nome não informado")}
                         </CardTitle>
                         <p className="text-muted-foreground text-sm">
@@ -28,10 +28,10 @@ const CardPerson = ({ person, daysMissing }: Props) => {
             <CardContent>
                 <div className="flex justify-center  items-center flex-col lg:flex-row gap-8">
                     <div className="flex-shrink-0">
-                        <div className="w-80 h-80 bg-muted rounded-lg flex items-center justify-center overflow-hidden border-2 border-border">
+                        <div className="w-full max-w-xs sm:w-80 h-64 sm:h-80 bg-muted rounded-lg flex items-center justify-center overflow-hidden border-2 border-border">
                             {person.urlFoto ? (
                                 <img
-                                    src={person.urlFoto}
+                                    src={person.urlFoto.replace(/^http:\/\//i, 'https://')}
                                     alt={`Foto de ${person.nome}`}
                                     className="w-full h-full object-cover"
                                 />

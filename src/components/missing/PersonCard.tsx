@@ -30,7 +30,7 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
     const showImage = secureUrl && !imageError;
 
     return (
-        <Card className="flex flex-col justify-center items-center md:flex-row p-4 m-4">
+        <Card className="flex flex-col justify-center items-center md:flex-row p-4 m-2 w-full sm:w-auto md:m-4">
             <div className="w-[200px] h-[236px] flex-shrink-0 relative">
                 {showImage ? (
                     <>
