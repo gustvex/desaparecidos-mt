@@ -33,15 +33,12 @@ const Pagination = ({
         if (totalPages <= maxVisiblePages) {
             return Array.from({ length: totalPages }, (_, i) => i + 1);
         }
-
         const half = Math.floor(maxVisiblePages / 2);
         let start = Math.max(1, currentPage - half);
         const end = Math.min(totalPages, start + maxVisiblePages - 1);
-
         if (end - start + 1 < maxVisiblePages) {
             start = Math.max(1, end - maxVisiblePages + 1);
         }
-
         return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     };
 
@@ -52,26 +49,12 @@ const Pagination = ({
     if (totalPages <= 1) return null;
 
     return (
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-2">
+            {/* linha 1: números */}
             <div className="flex items-center justify-center gap-1 flex-wrap">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={loading || currentPage <= 1}
-                    className="gap-1 px-3"
-                >
-                    <ChevronLeft className="w-4 h-4" />
-                    Anterior
-                </Button>
-
                 {showStartEllipsis && (
                     <>
-                        <Button
-                            variant="outline"
-                            className={PAGE_BTN}
-                            onClick={() => handlePageChange(1)}
-                        >
+                        <Button variant="outline" className={PAGE_BTN} onClick={() => handlePageChange(1)}>
                             1
                         </Button>
                         {visiblePages[0] > 2 && (
@@ -101,16 +84,25 @@ const Pagination = ({
                                 <MoreHorizontal className="w-4 h-4" />
                             </span>
                         )}
-                        <Button
-                            variant="outline"
-                            className={PAGE_BTN}
-                            onClick={() => handlePageChange(totalPages)}
-                        >
+                        <Button variant="outline" className={PAGE_BTN} onClick={() => handlePageChange(totalPages)}>
                             {totalPages}
                         </Button>
                     </>
                 )}
+            </div>
 
+            {/* linha 2: anterior / próxima */}
+            <div className="flex items-center gap-2">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={loading || currentPage <= 1}
+                    className="gap-1 px-3"
+                >
+                    <ChevronLeft className="w-4 h-4" />
+                    Anterior
+                </Button>
                 <Button
                     variant="outline"
                     size="sm"

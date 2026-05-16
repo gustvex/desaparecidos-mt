@@ -30,7 +30,7 @@ const SearchBar = ({ onSearch, loading = false }: SearchBarProps) => {
 
     return (
         <div className="flex flex-col gap-4">
-            <h3 className="text-lg sm:text-xl font-semibold text-foreground">
+            <h3 className="text-lg sm:text-2xl font-bold text-foreground">
                 Consulte informações sobre pessoas desaparecidas ou já localizadas.
             </h3>
             <div className="flex flex-col sm:flex-row gap-4">
