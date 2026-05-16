@@ -4,18 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { toast } from "sonner"
 
-interface MissingInfoProps {
-    onCancel: () => void;
-    ocoId: number | undefined
+interface FormMissingProps {
+    ocoId: number | undefined;
 }
 
-const FormMissing = ({ onCancel, ocoId }: MissingInfoProps) => {
-    const { id } = useParams();
+const FormMissing = ({ ocoId }: FormMissingProps) => {
 
     const [informacao, setInformacao] = useState('');
     const [descricao, setDescricao] = useState('');
@@ -26,7 +23,7 @@ const FormMissing = ({ onCancel, ocoId }: MissingInfoProps) => {
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        if (!id || !informacao || !data || !descricao) {
+        if (!ocoId || !informacao || !data || !descricao) {
             toast.error('Por favor, preencha todos os campos obrigatórios.');
             return;
         }
@@ -121,15 +118,6 @@ const FormMissing = ({ onCancel, ocoId }: MissingInfoProps) => {
                         <Button type="submit" disabled={isSubmitting}>
                             {isSubmitting ? 'Enviando...' : 'Enviar Informações'}
                             <Send className="w-4 h-4 mr-2 mt-1" />
-                        </Button>
-
-                        <Button
-                            type="button"
-                            variant="secondary"
-                            onClick={onCancel}
-                        >
-                            <ArrowLeft className="w-4 h-4 mr-2" />
-                            Voltar
                         </Button>
                     </div>
                 </form>
