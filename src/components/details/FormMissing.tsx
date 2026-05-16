@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Typography } from '@/components/ui/typography';
 import { Send } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from "sonner"
@@ -36,7 +37,7 @@ const FormMissing = ({ ocoId }: FormMissingProps) => {
                 descricao,
                 data: new Date(data),
                 files,
-                
+
             };
 
             await submitInformacao(payload);
@@ -63,9 +64,9 @@ const FormMissing = ({ ocoId }: FormMissingProps) => {
                 <CardTitle className="text-xl text-primary">Adicionar Novas Informações</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-                <p className="text-sm text-muted-foreground">
+                <Typography variant="body" color="muted" as="p">
                     Sua contribuição é muito importante. Utilize o formulário abaixo para enviar qualquer informação sobre a pessoa desaparecida.
-                </p>
+                </Typography>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
@@ -98,7 +99,9 @@ const FormMissing = ({ ocoId }: FormMissingProps) => {
                                 multiple
                                 onChange={handleFileChange}
                             />
-                            <p className="text-xs text-muted-foreground mt-1">Anexe fotos da pessoa ou do local. (Opcional)</p>
+                            <Typography variant="caption" as="p" className="mt-1">
+                                Anexe fotos da pessoa ou do local. (Opcional)
+                            </Typography>
                         </div>
                     </div>
 

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import type { PessoaDesaparecidaDTO } from '@/assets/interfaces';
 import { formatDate, toTitleCase } from '@/lib/utils';
 import PersonPhoto from '@/components/shared/PersonPhoto';
+import { Typography } from '@/components/ui/typography';
 
 interface CardProps {
     person: PessoaDesaparecidaDTO;
@@ -31,8 +32,8 @@ interface InfoRowProps {
 const InfoRow = ({ icon, label, value }: InfoRowProps) => (
     <div className="flex items-center gap-2 text-sm">
         <span className="flex-shrink-0 text-muted-foreground">{icon}</span>
-        <span className="font-bold text-foreground flex-shrink-0">{label}</span>
-        <span className="truncate min-w-0 text-muted-foreground" title={value}>{value}</span>
+        <Typography variant="label" as="span" className="flex-shrink-0">{label}</Typography>
+        <Typography variant="body" color="muted" as="span" className="truncate min-w-0" title={value}>{value}</Typography>
     </div>
 );
 
@@ -47,12 +48,14 @@ const PersonCard: React.FC<CardProps> = ({ person }) => {
 
             <CardContent className="w-full md:w-[250px] p-0 pl-0 pt-4 md:pl-4 md:pt-0 flex flex-col justify-between h-[236px]">
                 <div className="flex flex-col gap-2 min-w-0">
-                    <h3
-                        className="text-sm font-semibold text-foreground truncate"
+                    <Typography
+                        variant="h3"
+                        as="h3"
+                        className="truncate"
                         title={toTitleCase(person.nome) || "Nome não informado"}
                     >
                         {toTitleCase(person.nome) || "Nome não informado"}
-                    </h3>
+                    </Typography>
 
                     <InfoRow
                         icon={<User className="w-4 h-4" />}

@@ -1,4 +1,5 @@
 import { Users } from "lucide-react";
+import { Typography } from "@/components/ui/typography";
 
 interface EmptyStateProps {
     title?: string;
@@ -12,8 +13,8 @@ const EmptyState = ({
     return (
         <div className="text-center py-12">
             <Users className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">{title}</h3>
-            <p className="text-muted-foreground">{description}</p>
+            <Typography variant="h3" className="mb-2">{title}</Typography>
+            <Typography variant="body" color="muted">{description}</Typography>
         </div>
     );
 };

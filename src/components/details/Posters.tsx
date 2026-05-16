@@ -1,6 +1,7 @@
 import type { PessoaDesaparecidaDTO } from "@/types";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Typography } from "@/components/ui/typography";
 import { Download, FileText } from "lucide-react";
 
 interface Props {
@@ -33,9 +34,9 @@ const Posters = ({ person }: Props) => {
                             </Button>
                         ))
                     ) : (
-                        <p className="text-sm text-muted-foreground col-span-2">
+                        <Typography variant="body" color="muted" as="p" className="col-span-2">
                             Nenhum informação disponível
-                        </p>
+                        </Typography>
                     )}
                 </div>
             </CardContent>
