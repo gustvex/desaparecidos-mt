@@ -8,7 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 export const formatDate = (dateInput?: string | Date) => {
   if (!dateInput) return "Não informada";
   try {
-    const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+    let date: Date;
+    if (typeof dateInput === 'string') {
+      // "yyyy-MM-dd" strings are parsed as UTC by new Date(), shifting the day in negative-offset timezones.
+      // Splitting and constructing manually ensures local timezone is used.
+      const parts = dateInput.split("T")[0].split("-").map(Number);
+      date = parts.length === 3 ? new Date(parts[0], parts[1] - 1, parts[2]) : new Date(dateInput);
+    } else {
+      date = dateInput;
+    }
     return date.toLocaleDateString("pt-BR");
   } catch {
     return "Data inválida";
