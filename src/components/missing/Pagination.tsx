@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import { Button } from '../ui/button';
 
-
 interface PaginationProps {
     loading?: boolean;
     error: string | null;
@@ -9,9 +8,10 @@ interface PaginationProps {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
-    showFirstLast?: boolean;
     maxVisiblePages?: number;
 }
+
+const PAGE_BTN = "w-9 h-9 p-0 shrink-0";
 
 const Pagination = ({
     loading,
@@ -20,7 +20,7 @@ const Pagination = ({
     error,
     totalPages,
     onPageChange,
-    maxVisiblePages = 1
+    maxVisiblePages = 3,
 }: PaginationProps) => {
 
     const handlePageChange = (page: number) => {
@@ -34,8 +34,8 @@ const Pagination = ({
             return Array.from({ length: totalPages }, (_, i) => i + 1);
         }
 
-        const halfVisible = Math.floor(maxVisiblePages / 2);
-        let start = Math.max(1, currentPage - halfVisible);
+        const half = Math.floor(maxVisiblePages / 2);
+        let start = Math.max(1, currentPage - half);
         const end = Math.min(totalPages, start + maxVisiblePages - 1);
 
         if (end - start + 1 < maxVisiblePages) {
@@ -49,20 +49,19 @@ const Pagination = ({
     const showStartEllipsis = visiblePages[0] > 1;
     const showEndEllipsis = visiblePages[visiblePages.length - 1] < totalPages;
 
-    if (totalPages <= 1) {
-        return null;
-    }
+    if (totalPages <= 1) return null;
 
     return (
-        <div className='flex flex-col gap-4'>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-
+        <div className="flex flex-col items-center gap-3">
+            <div className="flex items-center justify-center gap-1 flex-wrap">
                 <Button
                     variant="outline"
+                    size="sm"
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={loading || currentPage <= 1}
+                    className="gap-1 px-3"
                 >
-                    <ChevronLeft className="w-4 h-4 mr-1" />
+                    <ChevronLeft className="w-4 h-4" />
                     Anterior
                 </Button>
 
@@ -70,44 +69,41 @@ const Pagination = ({
                     <>
                         <Button
                             variant="outline"
-    
+                            className={PAGE_BTN}
                             onClick={() => handlePageChange(1)}
                         >
                             1
                         </Button>
                         {visiblePages[0] > 2 && (
-                            <Button variant="ghost" size="sm" disabled>
+                            <span className="w-9 h-9 flex items-center justify-center text-muted-foreground">
                                 <MoreHorizontal className="w-4 h-4" />
-                            </Button>
+                            </span>
                         )}
                     </>
                 )}
 
-                <div className="flex space-x-1">
-                    {visiblePages.map((page: number) => (
-                        <Button
-                            key={page}
-                            variant={page === currentPage ? "default" : "outline"}
-                            onClick={() => handlePageChange(page)}
-                            disabled={loading}
-                            className={page === currentPage ? "font-semibold" : ""}
-                        >
-                            {page}
-                        </Button>
-                    ))}
-                </div>
-
+                {visiblePages.map((page) => (
+                    <Button
+                        key={page}
+                        variant={page === currentPage ? "default" : "outline"}
+                        className={PAGE_BTN}
+                        onClick={() => handlePageChange(page)}
+                        disabled={loading}
+                    >
+                        {page}
+                    </Button>
+                ))}
 
                 {showEndEllipsis && (
                     <>
                         {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
-                            <Button variant="ghost" size="sm" disabled>
+                            <span className="w-9 h-9 flex items-center justify-center text-muted-foreground">
                                 <MoreHorizontal className="w-4 h-4" />
-                            </Button>
+                            </span>
                         )}
                         <Button
                             variant="outline"
-    
+                            className={PAGE_BTN}
                             onClick={() => handlePageChange(totalPages)}
                         >
                             {totalPages}
@@ -117,24 +113,21 @@ const Pagination = ({
 
                 <Button
                     variant="outline"
+                    size="sm"
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={loading || currentPage >= totalPages}
+                    className="gap-1 px-3"
                 >
                     Próxima
-                    <ChevronRight className="w-4 h-4 ml-1" />
+                    <ChevronRight className="w-4 h-4" />
                 </Button>
+            </div>
 
-            </div>
-            <div className='flex justify-center'>
-                {!loading && !error && (
-                    <p className="text-lg text-muted-foreground">
-                        {totalRecords > 0
-                            ? `Exibindo ${totalRecords} registros (Página ${currentPage} de ${totalPages})`
-                            : 'Nenhum registro encontrado'
-                        }
-                    </p>
-                )}
-            </div>
+            {!loading && !error && totalRecords > 0 && (
+                <p className="text-sm text-muted-foreground">
+                    Página {currentPage} de {totalPages} — {totalRecords} registros
+                </p>
+            )}
         </div>
     );
 };
