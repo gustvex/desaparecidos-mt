@@ -6,6 +6,16 @@ Projeto pessoal desenvolvido como modelo de implementação — uma SPA simples,
 
 ---
 
+## Demo
+
+[![Ver demo online](https://img.shields.io/badge/Ver_demo_online-Render-46E3B7?logo=render&logoColor=white&style=for-the-badge)](https://desaparecidos-mt-uss2.onrender.com)
+
+Acesse: **https://desaparecidos-mt-uss2.onrender.com**
+
+> Hospedado no plano gratuito do Render — a primeira requisição após inatividade pode levar alguns segundos para "acordar" o servidor.
+
+---
+
 ## Stack
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white&style=flat-square)
