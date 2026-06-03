@@ -18,7 +18,7 @@ const Posters = ({ person }: Props) => {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
                     {person?.ultimaOcorrencia?.listaCartaz && person.ultimaOcorrencia.listaCartaz.length > 0 ? (
                         person.ultimaOcorrencia.listaCartaz.map((cartaz, index) => (
                             <Button
@@ -26,14 +26,14 @@ const Posters = ({ person }: Props) => {
                                 variant="outline"
                                 size="lg"
                                 onClick={() => window.open(cartaz.urlCartaz, '_blank')}
-                                className="w-[200px]"
+                                className="w-full justify-center"
                             >
                                 <Download className="w-4 h-4 mr-2" />
                                 Baixar Cartaz
                             </Button>
                         ))
                     ) : (
-                        <p className="text-sm text-muted-foreground col-span-2">
+                        <p className="text-sm text-muted-foreground">
                             Nenhum informação disponível
                         </p>
                     )}
